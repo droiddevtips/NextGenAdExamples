@@ -1,58 +1,86 @@
 package com.droiddevtips.nextgenexamples.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Shapes
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.droiddevtips.nextgenexamples.ui.theme.typography.droidDevTipsTypography
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+val DarkColorScheme = darkColorScheme(
+    primary = Color(0xCCA4C639),
+    secondary = Color(0xFFE9F6BF),
+    tertiary = Color(0x99A4C639),
+    tertiaryContainer = Color(0x99A4C639).copy(alpha = 0.30f),
+    primaryContainer = Color(0xFF2A2A2A),
+    secondaryContainer = Color(0xFF797979),  // Color(0x99A4C639)
+    surfaceContainer = Color(0xFF2A2A2A),
+    background = Color(0xFF2A2A2A),
+    onSecondaryContainer = Color.White,
+    inversePrimary = Color.White,
+    surfaceContainerLow = Color.White,
+    surfaceContainerHighest = Color(0x99A4C639).copy(alpha = 0.30f),  // Color(0x99A4C639).copy(alpha = 0.30f)
+    surfaceContainerHigh = Color(0xFF2A2A2A),
+    outline = Color(0x99A4C639),
+    outlineVariant = Color(0xCCA4C639),
+    onPrimary = Color.White,
+    onPrimaryContainer = Color.White,
+    onTertiaryContainer = Color(0xCCA4C639),
+    onSurface = Color(0xFFE6E0E9),
+    surface = Color.Black,
+    onSurfaceVariant = Color(0xFFE6E0E9),
+    error = Color.Red
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+val LightColorScheme = lightColorScheme(
+    primary = Color(0xFFA4C639),
+    secondary = Color(0xFF769A04),
+    tertiary = Color(0xFFD3E892),
+    primaryContainer = Color.White,
+    tertiaryContainer = Color(0xFF769A04).copy(alpha = 0.22f),
+    onPrimaryContainer = Color.Black,
+    secondaryContainer = Color(0xFFD8D8D8),
+    surfaceContainer = Color.White,
+    background = Color.White,
+    inversePrimary = Color.Black,
+    surfaceContainerLow = Color.White,
+    surfaceContainerHigh = Color(0xFFD8D8D8),
+    surfaceContainerHighest = Color(0xFF769A04).copy(alpha = 0.22f),
+    outline = Color(0xFFA4C639),
+    onPrimary = Color.Black,
+    surface = Color.White,
+    onSurface = Color(0xFF1D1B20),
+    onSurfaceVariant = Color(0xFF797979)
+)
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+val themeShapes = Shapes(
+    extraSmall = RoundedCornerShape(4.0.dp),
+    small = RoundedCornerShape(8.0.dp),
+    medium = RoundedCornerShape(12.0.dp),
+    large = RoundedCornerShape(16.0.dp),
+    extraLarge = RoundedCornerShape(28.0.dp)
 )
 
 @Composable
-fun NextGenExamplesTheme(
+fun DroidDevTipsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        shapes = themeShapes,
+        typography = droidDevTipsTypography(),
         content = content
     )
 }
