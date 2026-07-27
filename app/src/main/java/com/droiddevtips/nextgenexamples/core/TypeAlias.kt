@@ -1,4 +1,4 @@
-package com.droiddevtips.nextgenexamples.ui.theme
+package com.droiddevtips.nextgenexamples.core
 
 import com.droiddevtips.nextgenexamples.R
 

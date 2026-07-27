@@ -3,7 +3,7 @@ package com.droiddevtips.nextgenexamples.ui.theme.typography
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import com.droiddevtips.nextgenexamples.ui.theme.AppFont
+import com.droiddevtips.nextgenexamples.core.AppFont
 
 /**
  * This is the Google Roboto typeface

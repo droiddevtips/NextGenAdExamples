@@ -1,0 +1,73 @@
+package com.droiddevtips.nextgenexamples.navigator
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.droiddevtips.nextgenexamples.screen.bannerAdExample.BannerAdExample
+import com.droiddevtips.nextgenexamples.screen.emptyScreen.EmptyScreen
+import com.droiddevtips.nextgenexamples.screen.iconAds.IconAdsExample
+import com.droiddevtips.nextgenexamples.screen.interstitialAds.InterstitialAdsExample
+import com.droiddevtips.nextgenexamples.screen.nativeAdExample.NativeAdExample
+import com.droiddevtips.nextgenexamples.screen.rewardedInterstitialAds.RewardedInterstitialAdsExample
+
+@Composable
+fun DetailView(route: Route, modifier: Modifier = Modifier) {
+
+
+    when(route) {
+        Route.BannerAdExample -> BannerAdExample(modifier = modifier)
+        Route.EmptyScreen -> EmptyScreen(modifier = modifier)
+        Route.IconAd -> IconAdsExample(modifier = modifier)
+        Route.InterstitialAds -> InterstitialAdsExample(modifier = modifier)
+        Route.NativeAdExample -> NativeAdExample(modifier = modifier)
+        Route.NoItemSelected -> EmptyScreen(modifier = modifier)
+        Route.RewardedInterstitialAdExample -> RewardedInterstitialAdsExample(modifier = modifier)
+    }
+
+
+    /*
+    return
+
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = route.route,
+        modifier = modifier
+    ) {
+
+        composable(route = Route.BannerAdExample.route) {
+            BannerAdExample(modifier = Modifier.fillMaxSize())
+        }
+
+        composable(route = Route.EmptyScreen.route) {
+            EmptyScreen(modifier = Modifier.fillMaxSize())
+        }
+
+        composable(route = Route.IconAd.route) {
+            IconAdsExample(modifier = Modifier.fillMaxSize())
+        }
+
+        composable(route = Route.InterstitialAds.route) {
+            InterstitialAdsExample(modifier = Modifier.fillMaxSize())
+        }
+
+        composable(route = Route.NativeAdExample.route) {
+            NativeAdExample(modifier = Modifier.fillMaxSize())
+        }
+
+        composable(route = Route.RewardedInterstitialAdExample.route) {
+            RewardedInterstitialAdsExample(modifier = Modifier.fillMaxSize())
+        }
+
+    }
+    */
+
+//    LaunchedEffect(route) {
+//        navController.navigate(route = route.route)
+//    }
+}
