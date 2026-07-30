@@ -1,7 +1,8 @@
-package com.droiddevtips.nextgenexamples.navigator
+package com.droiddevtips.nextgenexamples.navigator.ui.listPane.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -15,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,18 +25,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.droiddevtips.appwindowsizeandorientationdetector.Device
+import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
+import com.droiddevtips.nextgenexamples.navigator.data.NavigatorViewState
+import com.droiddevtips.nextgenexamples.navigator.ui.detailPane.data.Route
+import com.droiddevtips.nextgenexamples.navigator.ui.listPane.data.ListItem
 
 @Composable
 fun DemoAdListItem(
+    viewState: State<NavigatorViewState>,
     item: ListItem,
     modifier: Modifier = Modifier,
     onItemClicked: (Route) -> Unit
 ) {
+
+    val currentDeviceWindowSize = deviceDetectorCurrentWindowSize()
+
     Row(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(8.dp)
+            ).then(
+                if (currentDeviceWindowSize.device is Device.Tablet && viewState.value.selectedItem == item.route) {
+                    Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
+                } else {
+                    Modifier
+                }
             )
             .clickable(
                 interactionSource = remember { MutableInteractionSource() }, indication = ripple(

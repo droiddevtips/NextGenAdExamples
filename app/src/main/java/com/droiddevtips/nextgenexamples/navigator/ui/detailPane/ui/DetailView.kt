@@ -1,12 +1,8 @@
-package com.droiddevtips.nextgenexamples.navigator
+package com.droiddevtips.nextgenexamples.navigator.ui.detailPane.ui
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import com.droiddevtips.nextgenexamples.navigator.ui.detailPane.data.Route
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.BannerAdExample
 import com.droiddevtips.nextgenexamples.screen.emptyScreen.EmptyScreen
 import com.droiddevtips.nextgenexamples.screen.iconAds.IconAdsExample

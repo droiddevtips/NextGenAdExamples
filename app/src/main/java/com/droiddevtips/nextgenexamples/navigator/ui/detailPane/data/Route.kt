@@ -1,4 +1,4 @@
-package com.droiddevtips.nextgenexamples.navigator
+package com.droiddevtips.nextgenexamples.navigator.ui.detailPane.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
