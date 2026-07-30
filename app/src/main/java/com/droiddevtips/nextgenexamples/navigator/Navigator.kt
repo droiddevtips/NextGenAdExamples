@@ -5,6 +5,7 @@ package com.droiddevtips.nextgenexamples.navigator
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.layout.AnimatedPane
 import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
@@ -13,7 +14,6 @@ import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 
 @Composable
@@ -63,8 +63,9 @@ fun Navigator(modifier: Modifier = Modifier) {
                 ListPaneView(
                     itemList = demoItems,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .statusBarsPadding()
                         .fillMaxHeight()
+                        .fillMaxWidth()
                 ) { item ->
                     scope.launch {
                         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, item)
@@ -76,7 +77,7 @@ fun Navigator(modifier: Modifier = Modifier) {
             AnimatedPane {
                 val itemRoute = navigator.currentDestination?.contentKey ?: Route.EmptyScreen
 //                navController.navigate(route = newsItem)
-                DetailView(route = itemRoute, modifier = Modifier.fillMaxSize())
+                DetailView(route = itemRoute, modifier = Modifier.fillMaxSize().statusBarsPadding())
 
 
 //                ComingSoonPlaceholder(modifier = Modifier

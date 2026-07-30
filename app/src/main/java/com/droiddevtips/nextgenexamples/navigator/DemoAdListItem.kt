@@ -1,10 +1,12 @@
 package com.droiddevtips.nextgenexamples.navigator
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.ripple
@@ -22,14 +24,14 @@ fun DemoAdListItem(
 ) {
     Column(
         modifier
-            .padding(all = 16.dp)
+            .background(color = MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(8.dp))
             .clickable(
                 interactionSource = remember { MutableInteractionSource() }, indication = ripple(
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
                 )
             ) {
                 onItemClicked(item.route)
-            },
+            }.padding(all = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(text = item.title, fontSize = 14.sp)
