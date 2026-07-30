@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ListItem(
+    val icon: Int,
     val route: Route,
     val title: String,
     val subtitle: String

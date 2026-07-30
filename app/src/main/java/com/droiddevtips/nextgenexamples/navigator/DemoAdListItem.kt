@@ -23,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.droiddevtips.nextgenexamples.core.Drawable
 
 @Composable
 fun DemoAdListItem(
@@ -53,10 +52,10 @@ fun DemoAdListItem(
                 .size(80.dp)
         ) {
             Image(
-                painter = painterResource(Drawable.adsense),
+                painter = painterResource(item.icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(60.dp)
                     .align(alignment = Alignment.Center)
             )
         }
