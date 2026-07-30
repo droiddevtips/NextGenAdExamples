@@ -1,8 +1,7 @@
-package com.droiddevtips.nextgenexamples.navigator
+package com.droiddevtips.nextgenexamples.screen.comingPlaceholder
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text

@@ -23,32 +23,27 @@ fun Navigator(modifier: Modifier = Modifier) {
         ListItem(
             route = Route.BannerAdExample,
             title = "Banner Ads",
-            subtitle = "Compose banner ads example"
-        ),
-        ListItem(
-            route = Route.EmptyScreen,
-            title = "Empty screen",
-            subtitle = "Compose banner ads example1"
+            subtitle = "Ads occupy a portion of an app's layout."
         ),
         ListItem(
             route = Route.IconAd,
             title = "Icon Ads",
-            subtitle = "Compose banner ads example2"
+            subtitle = "Specialized ad format introduced"
         ),
         ListItem(
             route = Route.InterstitialAds,
             title = "Interstitial ads",
-            subtitle = "Compose banner ads example3"
+            subtitle = "Ads cover the full screen of their host app."
         ),
         ListItem(
             route = Route.NativeAdExample,
-            title = "Native ads example",
-            subtitle = "Compose banner ads example4"
+            title = "Native ads",
+            subtitle = "Ads match the platform's native UI components."
         ),
         ListItem(
             route = Route.RewardedInterstitialAdExample,
             title = "Rewarded Interstitial ads",
-            subtitle = "Compose banner ads example5"
+            subtitle = "Rewarded interstitials offer rewards for ads appearance"
         )
     )
 
