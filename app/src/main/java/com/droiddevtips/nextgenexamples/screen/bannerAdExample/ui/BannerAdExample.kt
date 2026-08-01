@@ -1,4 +1,4 @@
-package com.droiddevtips.nextgenexamples.screen.bannerAdExample
+package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -28,17 +28,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
-import com.droiddevtips.nextgenexamples.core.AppString
-import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
+import com.droiddevtips.nextgenexamples.screen.bannerAdExample.BannerAdListExample
+import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.bannerAdTabTitles
 import kotlinx.coroutines.launch
-
-private val bannerAdTabTitles = listOf(
-    Tab(title = AppString.list, icon = Drawable.list_icon),
-    Tab(title = AppString.grid, icon = Drawable.grid_icon)
-)
-
-data class Tab(val title: Int, val icon: Int)
 
 @Composable
 fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
