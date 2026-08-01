@@ -1,5 +1,6 @@
 package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,6 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
@@ -42,7 +45,10 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
         if (windowSize.device is Device.Mobile) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(space = 8.dp, alignment = Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 8.dp,
+                    alignment = Alignment.CenterHorizontally
+                ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
@@ -65,7 +71,10 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
             PrimaryTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 divider = {
-                    HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.secondaryContainer)
+                    HorizontalDivider(
+                        thickness = 1.dp,
+                        color = MaterialTheme.colorScheme.secondaryContainer
+                    )
                 },
                 containerColor = MaterialTheme.colorScheme.background,
                 indicator = {
@@ -103,7 +112,19 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxSize()
             ) { page ->
                 when (page) {
-                    0 -> BannerAdListExample(modifier = Modifier.fillMaxSize())
+                    0 -> {
+
+                        Log.i("TAG12", "Horizontal pager index 0 called!")
+                        val viewModel: BannerAdListViewModel =
+                            viewModel(factory = BannerAdListViewModelFactory())
+                        val viewState = viewModel.viewState.collectAsStateWithLifecycle()
+
+                        BannerAdListExample(
+                            viewState = viewState.value,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
+
                     1 -> BannerAdGridTab()
                 }
             }

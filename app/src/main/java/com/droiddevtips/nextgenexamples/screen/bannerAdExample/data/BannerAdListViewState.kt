@@ -5,5 +5,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class BannerAdListViewState(
-    val articles: List<BannerAdArticle> = emptyList()
+    val articles: List<BannerAdExampleDisplayItem> = emptyList()
 ) : Parcelable
