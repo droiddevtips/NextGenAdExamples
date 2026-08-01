@@ -28,15 +28,14 @@ import androidx.compose.ui.unit.sp
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.navigator.data.NavigatorViewState
-import com.droiddevtips.nextgenexamples.navigator.ui.detailPane.data.Route
-import com.droiddevtips.nextgenexamples.navigator.ui.listPane.data.ListItem
+import com.droiddevtips.nextgenexamples.navigator.data.Screen
 
 @Composable
 fun DemoAdListItem(
     viewState: State<NavigatorViewState>,
-    item: ListItem,
+    item: Screen,
     modifier: Modifier = Modifier,
-    onItemClicked: (Route) -> Unit
+    onItemClicked: (Screen) -> Unit
 ) {
 
     val currentDeviceWindowSize = deviceDetectorCurrentWindowSize()
@@ -47,7 +46,7 @@ fun DemoAdListItem(
                 color = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(8.dp)
             ).then(
-                if (currentDeviceWindowSize.device is Device.Tablet && viewState.value.selectedItem == item.route) {
+                if (currentDeviceWindowSize.device is Device.Tablet && viewState.value.selectedItem == item) {
                     Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
                 } else {
                     Modifier
@@ -58,7 +57,7 @@ fun DemoAdListItem(
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f)
                 )
             ) {
-                onItemClicked(item.route)
+                onItemClicked(item)
             }
             .padding(all = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -82,7 +81,7 @@ fun DemoAdListItem(
         ) {
             Text(text = item.title, fontSize = 16.sp, fontWeight = FontWeight.Bold)
             Text(
-                text = item.subtitle,
+                text = item.description,
                 fontSize = 14.sp,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis

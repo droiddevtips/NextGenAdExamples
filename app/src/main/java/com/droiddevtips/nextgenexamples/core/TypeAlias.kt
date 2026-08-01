@@ -9,3 +9,4 @@ import com.droiddevtips.nextgenexamples.R
 
 typealias AppFont = R.font
 typealias Drawable = R.drawable
+typealias AppString = R.string

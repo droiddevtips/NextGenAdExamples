@@ -17,22 +17,21 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.droiddevtips.nextgenexamples.navigator.data.NavigatorViewAction
 import com.droiddevtips.nextgenexamples.navigator.data.NavigatorViewState
-import com.droiddevtips.nextgenexamples.navigator.ui.detailPane.data.Route
+import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import com.droiddevtips.nextgenexamples.navigator.ui.detailPane.ui.DetailView
-import com.droiddevtips.nextgenexamples.navigator.ui.listPane.data.ListItem
 import com.droiddevtips.nextgenexamples.navigator.ui.listPane.ui.ListPaneView
 import kotlinx.coroutines.launch
 
 @Composable
 fun Navigator(
     viewState: State<NavigatorViewState>,
-    items: List<ListItem>,
+    items: List<Screen>,
     modifier: Modifier = Modifier,
     navigatorViewAction: (NavigatorViewAction) -> Unit
 ) {
 
     val scope = rememberCoroutineScope()
-    val navigator = rememberListDetailPaneScaffoldNavigator<Route>()
+    val navigator = rememberListDetailPaneScaffoldNavigator<Screen>()
 
     NavigableListDetailPaneScaffold(
         modifier = modifier,
@@ -47,7 +46,7 @@ fun Navigator(
                         .fillMaxHeight()
                         .fillMaxWidth()
                 ) { route ->
-                    navigatorViewAction(NavigatorViewAction.SetSelectedItem(route = route))
+                    navigatorViewAction(NavigatorViewAction.SetSelectedItem(screen = route))
                     scope.launch {
                         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, route)
                     }
@@ -56,9 +55,9 @@ fun Navigator(
         },
         detailPane = {
             AnimatedPane {
-                val itemRoute = navigator.currentDestination?.contentKey ?: Route.EmptyScreen
+                val itemScreen = navigator.currentDestination?.contentKey ?: Screen.EmptyScreen
                 DetailView(
-                    route = itemRoute, modifier = Modifier
+                    screen = itemScreen, modifier = Modifier
                         .fillMaxSize()
                         .statusBarsPadding()
                 )

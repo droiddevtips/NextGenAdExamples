@@ -17,7 +17,7 @@ class NavigatorViewModel: ViewModel() {
     fun performAction(action: NavigatorViewAction) {
         when(action) {
             is NavigatorViewAction.SetSelectedItem -> {
-                _viewState.update { it.copy(selectedItem = action.route) }
+                _viewState.update { it.copy(selectedItem = action.screen) }
             }
         }
     }

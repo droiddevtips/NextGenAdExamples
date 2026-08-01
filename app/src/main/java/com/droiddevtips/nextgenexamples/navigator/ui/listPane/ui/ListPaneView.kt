@@ -15,15 +15,14 @@ import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.extensions.borderRight
 import com.droiddevtips.nextgenexamples.navigator.data.NavigatorViewState
-import com.droiddevtips.nextgenexamples.navigator.ui.detailPane.data.Route
-import com.droiddevtips.nextgenexamples.navigator.ui.listPane.data.ListItem
+import com.droiddevtips.nextgenexamples.navigator.data.Screen
 
 @Composable
 fun ListPaneView(
     viewState: State<NavigatorViewState>,
-    itemList: List<ListItem>,
+    itemList: List<Screen>,
     modifier: Modifier = Modifier,
-    onItemClicked: (Route) -> Unit
+    onItemClicked: (Screen) -> Unit
 ) {
     val windowSize = deviceDetectorCurrentWindowSize()
 

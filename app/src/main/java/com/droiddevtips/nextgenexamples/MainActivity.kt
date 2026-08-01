@@ -10,10 +10,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.droiddevtips.nextgenexamples.navigator.data.demoItems
 import com.droiddevtips.nextgenexamples.navigator.ui.Navigator
 import com.droiddevtips.nextgenexamples.navigator.ui.NavigatorViewModel
 import com.droiddevtips.nextgenexamples.navigator.ui.NavigatorViewModelFactory
+import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import com.droiddevtips.nextgenexamples.ui.theme.DroidDevTipsTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,12 +22,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DroidDevTipsTheme {
+
+                val items = Screen::class.sealedSubclasses.mapNotNull { it.objectInstance }.filterNot { it is Screen.EmptyScreen || it is Screen.NoItemSelected }
+
                 val navigatorViewModel: NavigatorViewModel =
                     viewModel(factory = NavigatorViewModelFactory())
                 val viewState = navigatorViewModel.viewState.collectAsStateWithLifecycle()
                 Navigator(
                     viewState = viewState,
-                    items = demoItems,
+                    items = items,
                     modifier = Modifier
                         .fillMaxSize()
                         .background(color = MaterialTheme.colorScheme.background),
