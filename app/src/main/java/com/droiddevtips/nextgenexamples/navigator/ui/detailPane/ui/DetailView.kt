@@ -13,7 +13,7 @@ import com.droiddevtips.nextgenexamples.screen.rewardedInterstitialAds.RewardedI
 @Composable
 fun DetailView(screen: Screen, modifier: Modifier = Modifier) {
     when(screen) {
-        Screen.BannerAdExample -> BannerAdExample(modifier = modifier)
+        Screen.BannerAdExample -> BannerAdExample(screen = screen, modifier = modifier)
         Screen.EmptyScreen -> EmptyScreen(modifier = modifier)
         Screen.IconAd -> IconAdsExample(modifier = modifier)
         Screen.InterstitialAds -> InterstitialAdsExample(modifier = modifier)

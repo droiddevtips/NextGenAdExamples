@@ -23,14 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.core.AppString
 import com.droiddevtips.nextgenexamples.core.Drawable
-import com.droiddevtips.nextgenexamples.ui.theme.DroidDevTipsTheme
+import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import kotlinx.coroutines.launch
 
 private val bannerAdTabTitles = listOf(
@@ -41,7 +40,7 @@ private val bannerAdTabTitles = listOf(
 data class Tab(val title: Int, val icon: Int)
 
 @Composable
-fun BannerAdExample(modifier: Modifier = Modifier) {
+fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
 
     val windowSize = deviceDetectorCurrentWindowSize()
 
@@ -54,12 +53,12 @@ fun BannerAdExample(modifier: Modifier = Modifier) {
             ) {
 
                 Image(
-                    painter = painterResource(id = Drawable.banner_ads),
+                    painter = painterResource(id = screen.icon),
                     contentDescription = null,
                     modifier = Modifier.size(20.dp)
                 )
 
-                Text(text = "BannerAd example")
+                Text(text = screen.title)
 
             }
         }
@@ -123,13 +122,5 @@ fun BannerAdExample(modifier: Modifier = Modifier) {
 private fun BannerAdGridTab(modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Text(text = "Grid", color = MaterialTheme.colorScheme.onSurface)
-    }
-}
-
-@Preview
-@Composable
-private fun BannerAdExamplePreview() {
-    DroidDevTipsTheme {
-        BannerAdExample()
     }
 }
