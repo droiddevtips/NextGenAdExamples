@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
@@ -20,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
 
 @Composable
@@ -45,39 +44,48 @@ fun BannerAdArticleListItem(
 
 @Composable
 private fun Article(item: BannerAdExampleDisplayItem.Article, modifier: Modifier = Modifier) {
-    Column {
-        Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+    Column(modifier = modifier.padding(all = 8.dp)) {
+        Row(
+            modifier = modifier,
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
 
             Image(
                 painter = painterResource(id = item.icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(50.dp)
-                    .weight(1f)
+                    .size(70.dp)
+                    .padding(start = 8.dp)
             )
 
             Column(
-                modifier = Modifier.fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .weight(1f)
             ) {
                 Text(text = item.title, fontWeight = FontWeight.Bold)
                 Text(
                     text = item.description,
-                    fontWeight = FontWeight.Bold,
+                    fontSize = 12.sp,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2
                 )
             }
         }
-        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+        HorizontalDivider(modifier = Modifier.padding(horizontal = 8.dp))
     }
 }
 
 @Composable
 private fun BannerAdView(item: BannerAdExampleDisplayItem.AdView, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .height(300.dp)
-            .background(color = Color.Red)
-    )
+
+    Box(modifier = modifier.padding(all = 8.dp)) {
+
+        Box(
+            modifier = Modifier.align(alignment = Alignment.Center)
+                .size(300.dp)
+                .background(color = Color.Red)
+        )
+    }
 }

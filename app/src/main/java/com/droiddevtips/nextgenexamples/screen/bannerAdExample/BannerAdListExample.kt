@@ -1,6 +1,7 @@
 package com.droiddevtips.nextgenexamples.screen.bannerAdExample
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -21,9 +22,9 @@ fun BannerAdListExample(
 private fun BannerAdArticleList(articles: List<BannerAdExampleDisplayItem>, modifier: Modifier = Modifier) {
     if (articles.isNotEmpty()) {
         LazyColumn(modifier = modifier.fillMaxSize()) {
-//            items(items = articles) { displayItem ->
-//            BannerAdArticleListItem(item = displayItem)
-//            }
+            items(items = articles, key = { it.key }) { displayItem ->
+                BannerAdArticleListItem(item = displayItem, modifier = Modifier.fillMaxWidth())
+            }
         }
     }
 }
