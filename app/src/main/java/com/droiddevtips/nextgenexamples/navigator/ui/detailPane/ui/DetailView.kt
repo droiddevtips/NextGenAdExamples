@@ -12,8 +12,6 @@ import com.droiddevtips.nextgenexamples.screen.rewardedInterstitialAds.RewardedI
 
 @Composable
 fun DetailView(route: Route, modifier: Modifier = Modifier) {
-
-
     when(route) {
         Route.BannerAdExample -> BannerAdExample(modifier = modifier)
         Route.EmptyScreen -> EmptyScreen(modifier = modifier)
@@ -23,47 +21,4 @@ fun DetailView(route: Route, modifier: Modifier = Modifier) {
         Route.NoItemSelected -> EmptyScreen(modifier = modifier)
         Route.RewardedInterstitialAdExample -> RewardedInterstitialAdsExample(modifier = modifier)
     }
-
-
-    /*
-    return
-
-    val navController = rememberNavController()
-
-    NavHost(
-        navController = navController,
-        startDestination = route.route,
-        modifier = modifier
-    ) {
-
-        composable(route = Route.BannerAdExample.route) {
-            BannerAdExample(modifier = Modifier.fillMaxSize())
-        }
-
-        composable(route = Route.EmptyScreen.route) {
-            EmptyScreen(modifier = Modifier.fillMaxSize())
-        }
-
-        composable(route = Route.IconAd.route) {
-            IconAdsExample(modifier = Modifier.fillMaxSize())
-        }
-
-        composable(route = Route.InterstitialAds.route) {
-            InterstitialAdsExample(modifier = Modifier.fillMaxSize())
-        }
-
-        composable(route = Route.NativeAdExample.route) {
-            NativeAdExample(modifier = Modifier.fillMaxSize())
-        }
-
-        composable(route = Route.RewardedInterstitialAdExample.route) {
-            RewardedInterstitialAdsExample(modifier = Modifier.fillMaxSize())
-        }
-
-    }
-    */
-
-//    LaunchedEffect(route) {
-//        navController.navigate(route = route.route)
-//    }
 }
