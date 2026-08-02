@@ -19,7 +19,7 @@ adaptiveLayout = "1.2.0"
 releaseVersion = "37"
 targetVersion = "37"
 minSdk = "24"
-minorApiLevel = "1"
+minorApiLevel = "0"
 javaVersion = "11"
 
 [libraries]
