@@ -5,6 +5,6 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 
 interface AdLoader {
 
-    suspend fun loadBannerAd(context: Context, adUnit: String): BannerAd?
+    fun loadBannerAd(context: Context, adUnit: String, result: (BannerAd?) -> Unit)
 
 }
