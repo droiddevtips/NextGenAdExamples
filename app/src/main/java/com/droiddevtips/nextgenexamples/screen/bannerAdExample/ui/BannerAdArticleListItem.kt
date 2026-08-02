@@ -1,5 +1,9 @@
 package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -11,9 +15,13 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.LayoutBoundsHolder
+import androidx.compose.ui.layout.onVisibilityChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -23,23 +31,19 @@ import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExam
 
 @Composable
 fun BannerAdArticleListItem(
+    viewport: LayoutBoundsHolder,
     item: BannerAdExampleDisplayItem,
     modifier: Modifier = Modifier
 ) {
     when (item) {
         is BannerAdExampleDisplayItem.AdView -> {
-            BannerAdView(item = item, modifier = modifier)
+            BannerAdView(item = item, viewport = viewport, modifier = modifier)
         }
 
         is BannerAdExampleDisplayItem.Article -> {
             Article(item = item, modifier = modifier)
         }
     }
-
-//    Column(modifier = Modifier.padding(all = 16.dp)) {
-//        Text(text = article.title, fontWeight = FontWeight.Bold)
-//        Text(text = article.summary, color = MaterialTheme.colorScheme.onSurfaceVariant)
-//    }
 }
 
 @Composable
@@ -78,14 +82,41 @@ private fun Article(item: BannerAdExampleDisplayItem.Article, modifier: Modifier
 }
 
 @Composable
-private fun BannerAdView(item: BannerAdExampleDisplayItem.AdView, modifier: Modifier = Modifier) {
+private fun BannerAdView(
+    item: BannerAdExampleDisplayItem.AdView,
+    viewport: LayoutBoundsHolder,
+    modifier: Modifier = Modifier
+) {
 
-    Box(modifier = modifier.padding(all = 8.dp)) {
+    val isVisible = rememberSaveable { mutableStateOf(false) }
 
-        Box(
+    Box(
+        modifier = modifier
+            .onVisibilityChanged(
+                minFractionVisible = 1.0f,
+                minDurationMs = 2000,
+                viewportBounds = viewport
+            ) { visible ->
+
+                if (visible)
+                    isVisible.value = true
+
+            }.padding(all = 8.dp)
+    ) {
+        AnimatedVisibility(
+            visible = isVisible.value,
+            enter = expandVertically(
+                expandFrom = Alignment.Top
+            ) + fadeIn(),
+            exit = slideOutVertically(),
             modifier = Modifier.align(alignment = Alignment.Center)
-                .size(300.dp)
-                .background(color = Color.Red)
-        )
+        ) {
+            Box(
+                modifier = Modifier
+                    .align(alignment = Alignment.Center)
+                    .size(300.dp)
+                    .background(color = Color.Red)
+            )
+        }
     }
 }

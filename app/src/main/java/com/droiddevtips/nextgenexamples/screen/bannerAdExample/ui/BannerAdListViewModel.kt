@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdListViewState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.withContext
 
 class BannerAdListViewModel : ViewModel() {
 
@@ -22,9 +24,7 @@ class BannerAdListViewModel : ViewModel() {
         loadBannerAdListItems()
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), BannerAdListViewState())
 
-    fun loadBannerAdListItems() {
-
-        //  = withContext(Dispatchers.IO)
+    suspend fun loadBannerAdListItems() = withContext(Dispatchers.IO) {
 
         Log.i("TAG12","Load banner ad list items called!")
 
@@ -50,8 +50,10 @@ class BannerAdListViewModel : ViewModel() {
             }
         }
 
-        _viewState.update {
-            it.copy(articles = itemList)
+        withContext(Dispatchers.Main) {
+            _viewState.update {
+                it.copy(articles = itemList)
+            }
         }
     }
 }

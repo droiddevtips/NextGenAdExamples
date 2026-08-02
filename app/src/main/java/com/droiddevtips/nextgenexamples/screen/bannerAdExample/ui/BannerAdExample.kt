@@ -1,6 +1,5 @@
 package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -113,8 +112,6 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
             ) { page ->
                 when (page) {
                     0 -> {
-
-                        Log.i("TAG12", "Horizontal pager index 0 called!")
                         val viewModel: BannerAdListViewModel =
                             viewModel(factory = BannerAdListViewModelFactory())
                         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
