@@ -3,6 +3,7 @@ package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.droiddevtips.nextgenexamples.ads.adManager.AppAdManager
 import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdListViewState
@@ -44,7 +45,7 @@ class BannerAdListViewModel : ViewModel() {
                 if (itemNumber % 10 == 0) {
                     add(BannerAdExampleDisplayItem.AdView(
                         _key = 2026+itemNumber, // create a unique key for banner ad view
-                        adUnit = "Test"
+                        adUnit = AppAdManager.BANNER_AD_UNIT
                     ))
                 }
             }

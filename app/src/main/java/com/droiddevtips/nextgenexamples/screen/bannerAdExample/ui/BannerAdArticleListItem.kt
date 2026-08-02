@@ -1,5 +1,6 @@
 package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
@@ -15,19 +16,27 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.LayoutBoundsHolder
 import androidx.compose.ui.layout.onVisibilityChanged
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import com.droiddevtips.nextgenexamples.ads.adManager.AppAdManager
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
+import com.google.android.libraries.ads.mobile.sdk.banner.AdView
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 
 @Composable
 fun BannerAdArticleListItem(
@@ -87,8 +96,12 @@ private fun BannerAdView(
     viewport: LayoutBoundsHolder,
     modifier: Modifier = Modifier
 ) {
-
+    val isPreviewMode = LocalInspectionMode.current
+    val context = LocalContext.current
+    val activity = LocalActivity.current
     val isVisible = rememberSaveable { mutableStateOf(false) }
+    val bannerAd = remember { mutableStateOf<BannerAd?>(null) }
+    val loadBannerAd = remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
@@ -99,10 +112,18 @@ private fun BannerAdView(
             ) { visible ->
 
                 if (visible)
-                    isVisible.value = true
+                    loadBannerAd.value = true
 
-            }.padding(all = 8.dp)
+            }
+            .then(
+                if (bannerAd != null) {
+                    Modifier.padding(all = 8.dp)
+                } else {
+                    Modifier
+                }
+            )
     ) {
+
         AnimatedVisibility(
             visible = isVisible.value,
             enter = expandVertically(
@@ -111,12 +132,33 @@ private fun BannerAdView(
             exit = slideOutVertically(),
             modifier = Modifier.align(alignment = Alignment.Center)
         ) {
-            Box(
-                modifier = Modifier
-                    .align(alignment = Alignment.Center)
-                    .size(300.dp)
-                    .background(color = Color.Red)
-            )
+            if (isPreviewMode) {
+                Box(
+                    modifier = Modifier
+                        .align(alignment = Alignment.Center)
+                        .size(300.dp)
+                        .background(color = Color.Red)
+                )
+            } else {
+                if (bannerAd.value != null && activity != null) {
+                    AndroidView(factory = { context ->
+                        AdView(context).apply {
+                            registerBannerAd(bannerAd.value!!, activity)
+                        }
+                    })
+                }
+            }
         }
+    }
+
+    LaunchedEffect(loadBannerAd) {
+
+        if (isPreviewMode)
+            return@LaunchedEffect
+
+        if (bannerAd.value == null)
+            bannerAd.value = AppAdManager.getBannerAd(context = context, adUnit = item.adUnit)
+
+        isVisible.value = bannerAd.value != null
     }
 }
