@@ -1,8 +1,9 @@
-package com.droiddevtips.nextgenexamples.ads.adManager
+package com.droiddevtips.nextgenexamples.ads.data.manager
 
 import android.content.Context
 import android.util.Log
-import com.droiddevtips.nextgenexamples.ads.adLoader.AdLoaderImplementation
+import com.droiddevtips.nextgenexamples.ads.data.preloader.AdPreLoaderImplementation
+import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 import com.droiddevtips.nextgenexamples.googleAdsConsentManager.GoogleAdsConsentManager
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdPreloader
@@ -33,7 +34,7 @@ object AppAdManager: AdManager {
             return
         }
 
-        AdLoaderImplementation.loadBannerAd(context = context, adUnit = adUnit) { bannerAd ->
+        AdPreLoaderImplementation.preLoadBannerAd(context = context, adUnit = adUnit) { bannerAd ->
             bannerAd(bannerAd)
         }
 

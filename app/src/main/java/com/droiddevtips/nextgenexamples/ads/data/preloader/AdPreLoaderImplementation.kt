@@ -1,7 +1,8 @@
-package com.droiddevtips.nextgenexamples.ads.adLoader
+package com.droiddevtips.nextgenexamples.ads.data.preloader
 
 import android.content.Context
 import android.util.Log
+import com.droiddevtips.nextgenexamples.ads.domain.AdPreLoader
 import com.google.android.libraries.ads.mobile.sdk.banner.AdSize
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdPreloader
@@ -13,7 +14,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.ResponseInfo
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentLinkedQueue
 
-object AdLoaderImplementation: AdLoader {
+object AdPreLoaderImplementation: AdPreLoader {
 
     // BannerAdPreloader keeps one shared, continuously-refilling ad pool per
     // preloadId, and BannerAdPreloader.start(...) must only ever be called
@@ -23,10 +24,11 @@ object AdLoaderImplementation: AdLoader {
     // fires again, instead of each slot starting (and silently superseding)
     // its own session.
     private val cachedBannerAd = ConcurrentHashMap<String, BannerAd>()
-    private val pendingListeners = ConcurrentHashMap<String, ConcurrentLinkedQueue<(BannerAd?) -> Unit>>()
+    private val pendingListeners =
+        ConcurrentHashMap<String, ConcurrentLinkedQueue<(BannerAd?) -> Unit>>()
     private val startedPreloadIds = ConcurrentHashMap.newKeySet<String>()
 
-    override fun loadBannerAd(context: Context, adUnit: String, result: (BannerAd?) -> Unit) {
+    override fun preLoadBannerAd(context: Context, adUnit: String, result: (BannerAd?) -> Unit) {
 
         val bannerAdPoll = BannerAdPreloader.pollAd(preloadId = adUnit)
         val cached = cachedBannerAd[adUnit]

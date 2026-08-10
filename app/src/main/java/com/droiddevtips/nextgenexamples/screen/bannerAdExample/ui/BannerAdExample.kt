@@ -31,7 +31,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
-import com.droiddevtips.nextgenexamples.screen.bannerAdExample.BannerAdListExample
+import com.droiddevtips.nextgenexamples.screen.bannerAdExample.list.BannerAdListExample
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.bannerAdTabTitles
 import kotlinx.coroutines.launch
 
@@ -112,13 +112,15 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
             ) { page ->
                 when (page) {
                     0 -> {
-                        val viewModel: BannerAdListViewModel =
-                            viewModel(factory = BannerAdListViewModelFactory())
+//                        val context = LocalContext.current.applicationContext
+                        val viewModel: BannerAdExampleViewModel =
+                            viewModel(factory = BannerAdExampleViewModelFactory())
                         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
 
                         BannerAdListExample(
                             viewState = viewState.value,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
+                            action = viewModel::performAction
                         )
                     }
 

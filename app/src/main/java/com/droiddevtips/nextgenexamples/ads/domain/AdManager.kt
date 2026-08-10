@@ -1,4 +1,4 @@
-package com.droiddevtips.nextgenexamples.ads.adManager
+package com.droiddevtips.nextgenexamples.ads.domain
 
 import android.content.Context
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
