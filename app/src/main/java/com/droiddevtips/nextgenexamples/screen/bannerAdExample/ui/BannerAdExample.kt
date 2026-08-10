@@ -33,6 +33,7 @@ import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurren
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.list.BannerAdListExample
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.bannerAdTabTitles
+import com.droiddevtips.nextgenexamples.screen.bannerAdExample.grid.BannerAdGridExample
 import kotlinx.coroutines.launch
 
 @Composable
@@ -112,7 +113,6 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
             ) { page ->
                 when (page) {
                     0 -> {
-//                        val context = LocalContext.current.applicationContext
                         val viewModel: BannerAdExampleViewModel =
                             viewModel(factory = BannerAdExampleViewModelFactory())
                         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
@@ -124,7 +124,16 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
                         )
                     }
 
-                    1 -> BannerAdGridTab()
+                    1 -> {
+                        val viewModel: BannerAdExampleViewModel =
+                            viewModel(factory = BannerAdExampleViewModelFactory())
+                        val viewState = viewModel.viewState.collectAsStateWithLifecycle()
+
+                        BannerAdGridExample(
+                            viewState = viewState.value,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
             }
         }

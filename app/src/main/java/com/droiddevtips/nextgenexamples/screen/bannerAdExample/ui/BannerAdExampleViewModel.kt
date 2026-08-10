@@ -1,5 +1,6 @@
 package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevtips.nextgenexamples.ads.domain.AdLoader
@@ -67,6 +68,7 @@ class BannerAdExampleViewModel(
             _viewState.update {
                 it.copy(isLoading = false)
             }
+            Log.i("TAG12","data loaded, state: ${viewState.value}")
         }
     }
 
