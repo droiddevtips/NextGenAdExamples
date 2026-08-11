@@ -53,17 +53,7 @@ private fun BannerAdArticleList(
     action: (BannerAdExampleViewModelAction) -> Unit
 ) {
 
-    Scaffold(modifier = modifier.statusBarsPadding(), topBar = {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Text(text = "Using the deprecated BannerAd.getView()", fontSize = 12.sp)
-        }
-    }) { paddingValues ->
+    Scaffold(modifier = modifier.statusBarsPadding()) { paddingValues ->
 
         LazyColumn(
             modifier = modifier
