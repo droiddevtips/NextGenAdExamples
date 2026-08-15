@@ -4,6 +4,12 @@ import android.util.Log
 import com.droiddevtips.nextgenexamples.logging.domain.LogLevel
 import com.droiddevtips.nextgenexamples.logging.domain.Logger
 
+/**
+ * Default [Logger] implementation used across the entire app.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 class LoggerImpl: Logger {
     override fun log(
         level: LogLevel,
