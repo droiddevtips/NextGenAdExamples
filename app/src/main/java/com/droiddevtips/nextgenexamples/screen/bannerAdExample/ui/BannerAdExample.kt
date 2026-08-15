@@ -2,7 +2,6 @@ package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
@@ -31,9 +31,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
-import com.droiddevtips.nextgenexamples.screen.bannerAdExample.list.BannerAdListExample
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.bannerAdTabTitles
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.grid.BannerAdGridExample
+import com.droiddevtips.nextgenexamples.screen.bannerAdExample.list.BannerAdListExample
 import kotlinx.coroutines.launch
 
 @Composable
@@ -66,6 +66,7 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
 
         val pagerState = rememberPagerState(pageCount = { bannerAdTabTitles.size })
         val coroutineScope = rememberCoroutineScope()
+        val context = LocalContext.current.applicationContext
 
         Column(modifier = modifier.padding(paddingValues)) {
             PrimaryTabRow(
@@ -114,7 +115,7 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
                 when (page) {
                     0 -> {
                         val viewModel: BannerAdExampleViewModel =
-                            viewModel(factory = BannerAdExampleViewModelFactory())
+                            viewModel(factory = BannerAdExampleViewModelFactory(context = context))
                         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
 
                         BannerAdListExample(
@@ -126,7 +127,7 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
 
                     1 -> {
                         val viewModel: BannerAdExampleViewModel =
-                            viewModel(factory = BannerAdExampleViewModelFactory())
+                            viewModel(factory = BannerAdExampleViewModelFactory(context = context))
                         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
 
                         BannerAdGridExample(
@@ -137,12 +138,5 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun BannerAdGridTab(modifier: Modifier = Modifier) {
-    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "Grid", color = MaterialTheme.colorScheme.onSurface)
     }
 }

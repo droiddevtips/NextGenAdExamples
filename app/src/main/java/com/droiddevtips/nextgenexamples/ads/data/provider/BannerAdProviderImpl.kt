@@ -17,10 +17,9 @@ import com.google.android.libraries.ads.mobile.sdk.common.ResponseInfo
 
 class BannerAdProviderImpl : BannerAdProvider, Logger by LoggerImpl() {
 
-    override fun loadBannerAd(
+    override fun preLoadBannerAd(
         context: Context,
-        adUnit: AdUnit,
-        bannerAd: (BannerAd?) -> Unit
+        adUnit: AdUnit
     ) {
         log(message = "loading banner ad unit '${adUnit.adUnit}'........")
 
@@ -32,7 +31,6 @@ class BannerAdProviderImpl : BannerAdProvider, Logger by LoggerImpl() {
                     level = LogLevel.Error,
                     message = "Unable to preloading banner ad '$preloadId' with error: ${adError.message}"
                 )
-                bannerAd(null)
             }
 
             override fun onAdsExhausted(preloadId: String) {
@@ -46,7 +44,6 @@ class BannerAdProviderImpl : BannerAdProvider, Logger by LoggerImpl() {
             override fun onAdPreloaded(preloadId: String, responseInfo: ResponseInfo) {
                 super.onAdPreloaded(preloadId, responseInfo)
                 log(message = "Banner ad with ID '$preloadId' successfully preloaded")
-                bannerAd(BannerAdPreloader.pollAd(preloadId))
             }
         }
 
@@ -56,15 +53,15 @@ class BannerAdProviderImpl : BannerAdProvider, Logger by LoggerImpl() {
         BannerAdPreloader.start(preloadId = adUnit.key, preloadConfiguration = preload, preloadCallback = preloadCallback)
     }
 
-    override fun isAvailable(adUnit: AdUnit): Boolean {
-        val isAvailable = BannerAdPreloader.isAdAvailable(adUnit.key)
+    override fun isAvailable(preLoaderID: String): Boolean {
+        val isAvailable = BannerAdPreloader.isAdAvailable(preloadId = preLoaderID)
         log(message = "Banner ad availability: $isAvailable")
         return isAvailable
     }
 
-    override fun pollBannerAd(adUnit: AdUnit): BannerAd? {
-        val bannerAd = BannerAdPreloader.pollAd(adUnit.key)
-        log(message = "Banner ad '${adUnit.key}' from the pre loader queue: $bannerAd")
+    override fun pollBannerAd(preLoaderID: String): BannerAd? {
+        val bannerAd = BannerAdPreloader.pollAd(preloadId = preLoaderID)
+        log(message = "Banner ad '$preLoaderID' from the pre loader queue: $bannerAd")
         return bannerAd
     }
 }

@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
 import androidx.lifecycle.ViewModel
