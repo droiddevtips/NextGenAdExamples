@@ -10,9 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.nextgenexamples.core.AppString
 import com.droiddevtips.nextgenexamples.core.Drawable
 
+/**
+ * The 'coming soon' composable placeholder.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun ComingSoonPlaceholder(modifier: Modifier = Modifier) {
     Column(
@@ -26,6 +34,6 @@ fun ComingSoonPlaceholder(modifier: Modifier = Modifier) {
             contentDescription = null,
         )
 
-        Text(text = "Coming soon", color = MaterialTheme.colorScheme.onPrimary)
+        Text(text = stringResource(id = AppString.coming_soon), color = MaterialTheme.colorScheme.onPrimary)
     }
 }
