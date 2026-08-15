@@ -4,6 +4,13 @@ import android.os.Parcelable
 import com.droiddevtips.nextgenexamples.core.Drawable
 import kotlinx.parcelize.Parcelize
 
+/**
+ * The available ads examples
+ * Note: Some of them are still in progress
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 @Parcelize
 sealed class Screen(val title: String, val description: String, val icon: Int, val route: String):
     Parcelable {
