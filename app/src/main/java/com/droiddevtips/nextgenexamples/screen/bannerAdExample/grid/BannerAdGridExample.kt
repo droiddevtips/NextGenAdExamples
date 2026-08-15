@@ -7,6 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleViewState
 
+/**
+ * The banner ad grid example composable
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 @Composable
 fun BannerAdGridExample(
     viewState: BannerAdExampleViewState,
