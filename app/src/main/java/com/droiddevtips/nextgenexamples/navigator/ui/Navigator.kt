@@ -22,6 +22,12 @@ import com.droiddevtips.nextgenexamples.navigator.ui.detailPane.ui.DetailView
 import com.droiddevtips.nextgenexamples.navigator.ui.listPane.ui.ListPaneView
 import kotlinx.coroutines.launch
 
+/**
+ * The navigator composable
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 @Composable
 fun Navigator(
     viewState: State<NavigatorViewState>,
