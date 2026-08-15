@@ -15,6 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.nextgenexamples.extensions.shimmerEffect
 
+/**
+ * Displays banner ad example (list) loading screen that contains the shimmer effect.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun BannerAdListLoadingScreen(modifier: Modifier = Modifier) {
 
