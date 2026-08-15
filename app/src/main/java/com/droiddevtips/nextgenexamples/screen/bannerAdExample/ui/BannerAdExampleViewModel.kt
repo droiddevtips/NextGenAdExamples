@@ -21,6 +21,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.seconds
 
+/**
+ * ViewModel responsible for managing the lifecycle and state of the banner ad examples
+ * displayed within a Composable screen.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 class BannerAdExampleViewModel(
     private val adLoader: AdLoader
 ) : ViewModel() {
