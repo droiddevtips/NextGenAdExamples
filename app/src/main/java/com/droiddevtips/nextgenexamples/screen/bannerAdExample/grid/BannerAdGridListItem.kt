@@ -42,17 +42,25 @@ fun BannerAdGridListItem(
 
     val isPreviewMode = LocalInspectionMode.current
 
-    when(item) {
+    when (item) {
         is BannerAdExampleDisplayItem.AdView -> {
-            BannerAdView(item = item, adManager = AppAdManager, modifier = Modifier.fillMaxWidth().fillMaxHeight())
+            BannerAdView(
+                item = item,
+                adManager = AppAdManager,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+            )
         }
+
         is BannerAdExampleDisplayItem.Article -> {
 
             Card(modifier = modifier) {
 
                 Image(
                     painter = painterResource(id = item.icon),
-                    contentDescription = null, modifier = Modifier.fillMaxWidth()
+                    contentDescription = null, modifier = Modifier
+                        .fillMaxWidth()
                         .height(120.dp)
                         .padding(horizontal = 8.dp)
                         .padding(top = 16.dp)
@@ -65,20 +73,33 @@ fun BannerAdGridListItem(
                         .padding(horizontal = 8.dp),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    Text(item.title, fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.inversePrimary)
-                    Text(item.description, fontSize = 10.sp, color = MaterialTheme.colorScheme.inversePrimary, maxLines = 3, overflow = TextOverflow.Ellipsis)
+                    Text(
+                        item.title,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.inversePrimary
+                    )
+                    Text(
+                        item.description,
+                        fontSize = 10.sp,
+                        color = MaterialTheme.colorScheme.inversePrimary,
+                        maxLines = 3,
+                        overflow = TextOverflow.Ellipsis
+                    )
                 }
 
                 Spacer(
-                    modifier = Modifier.height(
-                        30.dp
-                    ).then(
-                        if (isPreviewMode) {
-                            Modifier
-                        } else {
-                            Modifier.weight(1f)
-                        }
-                    )
+                    modifier = Modifier
+                        .height(
+                            30.dp
+                        )
+                        .then(
+                            if (isPreviewMode) {
+                                Modifier
+                            } else {
+                                Modifier.weight(1f)
+                            }
+                        )
                 )
             }
         }
