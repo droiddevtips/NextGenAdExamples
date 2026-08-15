@@ -15,6 +15,13 @@ import com.google.android.libraries.ads.mobile.sdk.common.PreloadCallback
 import com.google.android.libraries.ads.mobile.sdk.common.PreloadConfiguration
 import com.google.android.libraries.ads.mobile.sdk.common.ResponseInfo
 
+/**
+ * Default implementation of [BannerAdProvider] responsible for loading banner ads
+ * through the underlying ad SDK.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 class BannerAdProviderImpl : BannerAdProvider, Logger by LoggerImpl() {
 
     override fun preLoadBannerAd(
