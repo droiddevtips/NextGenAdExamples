@@ -20,7 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.droiddevtips.nextgenexamples.ui.theme.DroidDevTipsTheme
 
-
+/**
+ * Displays banner ad example loading screen.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun BannerAdGridLoadingScreen(visible: Boolean = true,modifier: Modifier) {
 
