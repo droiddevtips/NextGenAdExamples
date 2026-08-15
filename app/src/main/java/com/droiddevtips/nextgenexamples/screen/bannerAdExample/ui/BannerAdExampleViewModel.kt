@@ -1,5 +1,6 @@
 package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevtips.nextgenexamples.ads.domain.AdManager
@@ -104,6 +105,7 @@ class BannerAdExampleViewModel(
     }
 
     private fun clearBannerAdCache() {
+        Log.i("TAG35","Clear banner ad cache called!")
         adManager.clearAllCacheBannerAds(bannerAdListCacheKeys.toList())
         bannerAdListCacheKeys.clear()
     }
