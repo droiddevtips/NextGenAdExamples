@@ -10,6 +10,13 @@ import com.droiddevtips.nextgenexamples.screen.interstitialAds.InterstitialAdsEx
 import com.droiddevtips.nextgenexamples.screen.nativeAdExample.NativeAdExample
 import com.droiddevtips.nextgenexamples.screen.rewardedInterstitialAds.RewardedInterstitialAdsExample
 
+/**
+ * De list-detail detail view composables options
+ * Note: Some of them are still in progress
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 @Composable
 fun DetailView(screen: Screen, modifier: Modifier = Modifier) {
     when(screen) {
