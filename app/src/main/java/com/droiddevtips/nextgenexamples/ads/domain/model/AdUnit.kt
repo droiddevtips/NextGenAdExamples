@@ -3,6 +3,12 @@ package com.droiddevtips.nextgenexamples.ads.domain.model
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Represents a distinct type of ad that can be requested and displayed within the app.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Parcelize
 sealed class AdUnit(val key: String, val adUnit: String): Parcelable {
 
