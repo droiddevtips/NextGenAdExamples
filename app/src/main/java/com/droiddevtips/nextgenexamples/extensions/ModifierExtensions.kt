@@ -22,6 +22,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 
+/**
+ * Modifier extension functions.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 fun Modifier.borderRight(
     width: Dp = 1.dp,
     color: Color = Color.Blue

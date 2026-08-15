@@ -6,6 +6,12 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRefreshCallback
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 
+/**
+ * Banner ad extension functions.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 fun BannerAd.addEventCallback(key: String) {
     val logger = LoggerImpl()
     adEventCallback = object : BannerAdEventCallback {
