@@ -67,7 +67,7 @@ fun BannerAdView(
                 if (activity != null) {
                     AndroidView(
                         update = {
-                            // Without this sometimes it might result in a blank screen
+                            // Without this sometimes you might get a blank screen
                             it.requestLayout()
                         },
                         factory = { viewContext ->
