@@ -22,11 +22,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.droiddevtips.nextgenexamples.ads.ui.BannerAdView2
+import com.droiddevtips.nextgenexamples.ads.data.manager.AppAdManager
+import com.droiddevtips.nextgenexamples.ads.ui.BannerAdView
 import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
 import com.droiddevtips.nextgenexamples.ui.theme.DroidDevTipsTheme
 
+/**
+ * Displays the items of the grid example within the vertical lazy 'LazyVerticalGrid'.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun BannerAdGridListItem(
     item: BannerAdExampleDisplayItem,
@@ -37,7 +44,7 @@ fun BannerAdGridListItem(
 
     when(item) {
         is BannerAdExampleDisplayItem.AdView -> {
-            BannerAdView2(item = item, modifier = Modifier.fillMaxWidth().fillMaxHeight())
+            BannerAdView(item = item, adManager = AppAdManager, modifier = Modifier.fillMaxWidth().fillMaxHeight())
         }
         is BannerAdExampleDisplayItem.Article -> {
 

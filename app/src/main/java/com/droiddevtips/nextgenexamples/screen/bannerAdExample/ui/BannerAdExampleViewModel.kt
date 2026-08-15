@@ -2,7 +2,7 @@ package com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.droiddevtips.nextgenexamples.ads.domain.AdLoader
+import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.Article
@@ -29,7 +29,7 @@ import kotlin.time.Duration.Companion.seconds
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
 class BannerAdExampleViewModel(
-    private val adLoader: AdLoader
+    private val adManager: AdManager
 ) : ViewModel() {
 
     private var bannerAdListCacheKeys = ArrayList<AdUnit>()
@@ -58,7 +58,7 @@ class BannerAdExampleViewModel(
 
                 if (itemNumber % 10 == 0) {
                     val bannerAdUnit = AdUnit.BannerAd(_key = "${2026 + itemNumber}")
-                    adLoader.preLoadBannerAd(adUnit = bannerAdUnit)
+                    adManager.preLoadBannerAd(adUnit = bannerAdUnit)
                     cacheAdUnit(adUnit = bannerAdUnit)
                     add(
                         BannerAdExampleDisplayItem.AdView(
@@ -98,13 +98,13 @@ class BannerAdExampleViewModel(
 
     private fun cacheAdUnit(adUnit: AdUnit) {
         bannerAdListCacheKeys.add(adUnit)
-        adLoader.preLoadBannerAd(
+        adManager.preLoadBannerAd(
             adUnit = adUnit
         )
     }
 
     private fun clearBannerAdCache() {
-        adLoader.removeAllCacheBannerAds(bannerAdListCacheKeys.toList())
+        adManager.clearAllCacheBannerAds(bannerAdListCacheKeys.toList())
         bannerAdListCacheKeys.clear()
     }
 }

@@ -9,6 +9,17 @@ import com.droiddevtips.nextgenexamples.googleAdsConsentManager.GoogleAdsConsent
 import com.google.android.libraries.ads.mobile.sdk.MobileAds
 import com.google.android.libraries.ads.mobile.sdk.initialization.InitializationConfig
 
+/**
+ * Application-level entry point for the app.
+ *
+ * Responsible for initializing app-wide dependencies and components that must be
+ * available before any Activity is created.
+ * This class is instantiated once per process lifecycle and lives for the entire
+ * duration of the app's execution.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 class App : Application() {
 
     override fun onCreate() {
@@ -22,7 +33,8 @@ class App : Application() {
             Log.i("TAG12","Mobile Ads init status -> $test")
         }
 
-        AdLoaderImpl.init(context = applicationContext, bannerAdProvider = BannerAdProviderImpl())
+        AppAdManager.init(adLoader = AdLoaderImpl.also { it.init(context = applicationContext, bannerAdProvider = BannerAdProviderImpl()) })
+
     }
 
 }

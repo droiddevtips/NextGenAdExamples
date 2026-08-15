@@ -15,6 +15,9 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
  * concerns — those are handled by higher-level components such as
  * [BannerAdPreloader] or [AdManager]. This keeps ad-loading logic isolated
  * and testable independently of ad lifecycle and presentation.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
  */
 interface AdLoader {
     fun init(context: Context, bannerAdProvider: BannerAdProvider)

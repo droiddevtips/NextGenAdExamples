@@ -16,15 +16,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.droiddevtips.nextgenexamples.ads.data.manager.AppAdManager
+import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 import com.droiddevtips.nextgenexamples.extensions.addBannerAdRefreshCallback
 import com.droiddevtips.nextgenexamples.extensions.addEventCallback
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
 import com.google.android.libraries.ads.mobile.sdk.banner.AdView
 
+/**
+ * Load and displays the new [AdView] within the composition based on the preload ID provided.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
-fun BannerAdView2(
+fun BannerAdView(
     item: BannerAdExampleDisplayItem.AdView,
+    adManager: AdManager,
     modifier: Modifier = Modifier
 ) {
     val isPreviewMode = LocalInspectionMode.current
@@ -33,7 +40,7 @@ fun BannerAdView2(
         return
     }
 
-    val bannerAd = remember { mutableStateOf(AppAdManager.getBannerAd(preLoaderID = item.key)) }
+    val bannerAd = remember { mutableStateOf(adManager.getBannerAd(preLoaderID = item.key)) }
 
     if (bannerAd.value == null) {
         NoBannerAdPlaceholder(modifier = modifier)

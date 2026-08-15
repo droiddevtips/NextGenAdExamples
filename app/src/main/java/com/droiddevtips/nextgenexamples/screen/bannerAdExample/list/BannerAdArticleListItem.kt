@@ -16,9 +16,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.droiddevtips.nextgenexamples.ads.ui.BannerAdView2
+import com.droiddevtips.nextgenexamples.ads.data.manager.AppAdManager
+import com.droiddevtips.nextgenexamples.ads.ui.BannerAdView
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
 
+/**
+ *  Displays the banner ad article list item.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun BannerAdArticleListItem(
     item: BannerAdExampleDisplayItem,
@@ -26,7 +33,7 @@ fun BannerAdArticleListItem(
 ) {
     when (item) {
         is BannerAdExampleDisplayItem.AdView -> {
-            BannerAdView2(item = item, modifier = modifier)
+            BannerAdView(item = item, adManager = AppAdManager, modifier = modifier)
         }
 
         is BannerAdExampleDisplayItem.Article -> {
