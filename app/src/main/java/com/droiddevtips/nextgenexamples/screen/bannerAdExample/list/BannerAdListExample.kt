@@ -7,11 +7,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
@@ -45,20 +43,16 @@ private fun BannerAdArticleList(
     modifier: Modifier = Modifier,
     action: (BannerAdExampleViewModelAction) -> Unit
 ) {
-
-    Scaffold(modifier = modifier.statusBarsPadding()) { paddingValues ->
-
-        LazyColumn(
-            modifier = modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-        ) {
-            items(items = articles, key = { it.key }) { displayItem ->
-                BannerAdArticleListItem(
-                    item = displayItem,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+    LazyColumn(
+        modifier = modifier
+            .statusBarsPadding()
+            .fillMaxSize()
+    ) {
+        items(items = articles, key = { it.key }) { displayItem ->
+            BannerAdArticleListItem(
+                item = displayItem,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 

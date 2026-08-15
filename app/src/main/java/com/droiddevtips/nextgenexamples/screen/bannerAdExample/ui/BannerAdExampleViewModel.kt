@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.droiddevtips.nextgenexamples.ads.domain.AdLoader
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.droiddevtips.nextgenexamples.core.Drawable
+import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.Article
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleViewModelAction
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleViewState
@@ -39,12 +40,13 @@ class BannerAdExampleViewModel(
 
             itemList.apply {
 
+                val article = dummyArticles.random()
                 add(
                     BannerAdExampleDisplayItem.Article(
                         _key = itemNumber, // Article unique key
-                        icon = Drawable.ads_icon,
-                        title = "Article $itemNumber",
-                        description = "This is a short summary for article $itemNumber"
+                        icon = article.featureImage,
+                        title = article.title,
+                        description = article.description
                     )
                 )
 
@@ -79,6 +81,13 @@ class BannerAdExampleViewModel(
             }
         }
     }
+
+    private val dummyArticles = listOf<Article>(
+        Article(featureImage = Drawable.paris, title = "The Eiffel Tower", description = "The Eiffel Tower (French: Tour Eiffel) is a wrought-iron lattice tower located on the Champ de Mars in Paris, France. Widely recognized as the ultimate symbol of Paris and a global cultural icon of France, it is one of the most-visited monuments in the world."),
+        Article(featureImage = Drawable.amsterdam, title = "Amsterdam", description = "Amsterdam, the capital and most populous city of the Netherlands, is a vibrant metropolis renowned for its artistic heritage, elaborate canal systems, and narrow canal houses with gabled facades. Located in the province of North Holland, the city blends rich history with a progressive, modern lifestyle."),
+        Article(featureImage = Drawable.belgium_atomium, title = "The Atomium", description = "The Atomium is one of Brussels' most iconic landmarks and a masterpiece of mid-century modernist architecture. Originally built as the central pavilion and symbol for the 1958 Brussels World's Fair (Expo 58), it was designed to celebrate scientific progress, engineering skill, and the peaceful use of atomic energy at the dawn of the Atomic Age."),
+        Article(featureImage = Drawable.pisa, title = "Pisa", description = "Pisa is a historic city in the Tuscany region of central Italy, globally renowned for its iconic architectural marvels, vibrant culture, and deep academic roots. Though world-famous for its unintentional \"leaning\" landmark, Pisa is a lively medieval university town with a rich maritime history and plenty of cultural charm."),
+    )
 
     private fun cacheAdUnit(adUnit: AdUnit) {
         bannerAdListCacheKeys.add(adUnit)

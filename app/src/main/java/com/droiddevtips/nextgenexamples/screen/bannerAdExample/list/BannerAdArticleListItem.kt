@@ -6,7 +6,6 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.droiddevtips.nextgenexamples.ads.data.preloader.AdLoaderImpl
+import com.droiddevtips.nextgenexamples.ads.ui.BannerAdPreview
+import com.droiddevtips.nextgenexamples.ads.ui.NoBannerAdPlaceholder
 import com.droiddevtips.nextgenexamples.extensions.addBannerAdRefreshCallback
 import com.droiddevtips.nextgenexamples.extensions.addEventCallback
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
@@ -93,24 +93,17 @@ private fun BannerAdView(
 ) {
     val isPreviewMode = LocalInspectionMode.current
     if (isPreviewMode) {
-
-        Box(modifier = modifier) {
-            Box(
-                modifier = Modifier
-                    .align(alignment = Alignment.Center)
-                    .size(300.dp)
-                    .background(color = Color.Red)
-            )
-        }
+        BannerAdPreview(modifier = modifier)
         return
     }
 
     val bannerAd = remember { mutableStateOf(AdLoaderImpl.loadBannerAd(item.key)) }
 //    bannerAd.value = AdLoaderImpl.loadBannerAd(item.key)
 
-    if (bannerAd.value == null)
+    if (bannerAd.value == null) {
+        NoBannerAdPlaceholder(modifier = modifier)
         return
-
+    }
 
     bannerAd.value?.let { ad ->
         val activity = LocalActivity.current
