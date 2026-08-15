@@ -17,6 +17,12 @@ import com.droiddevtips.nextgenexamples.extensions.borderRight
 import com.droiddevtips.nextgenexamples.navigator.data.NavigatorViewState
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
 
+/**
+ * The list pane view composable
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 @Composable
 fun ListPaneView(
     viewState: State<NavigatorViewState>,
