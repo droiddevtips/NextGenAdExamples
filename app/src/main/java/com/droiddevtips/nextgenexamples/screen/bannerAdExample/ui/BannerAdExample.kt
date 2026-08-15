@@ -115,7 +115,7 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
                 when (page) {
                     0 -> {
                         val viewModel: BannerAdExampleViewModel =
-                            viewModel(factory = BannerAdExampleViewModelFactory(context = context))
+                            viewModel(factory = BannerAdExampleViewModelFactory())
                         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
 
                         BannerAdListExample(
@@ -127,7 +127,7 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
 
                     1 -> {
                         val viewModel: BannerAdExampleViewModel =
-                            viewModel(factory = BannerAdExampleViewModelFactory(context = context))
+                            viewModel(factory = BannerAdExampleViewModelFactory())
                         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
 
                         BannerAdGridExample(
