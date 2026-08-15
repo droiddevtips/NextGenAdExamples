@@ -8,9 +8,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.droiddevtips.nextgenexamples.core.AppString
 
+/**
+ * Displays a placeholder in place of an ad when no ad is currently available to show.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun NoBannerAdPlaceholder(modifier: Modifier = Modifier) {
 
@@ -22,7 +30,7 @@ fun NoBannerAdPlaceholder(modifier: Modifier = Modifier) {
                 .background(color = MaterialTheme.colorScheme.secondaryContainer)
         ) {
             Text(
-                text = "No banner ad available at the moment",
+                text = stringResource(id = AppString.no_ads),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.align(alignment = Alignment.Center)
             )
