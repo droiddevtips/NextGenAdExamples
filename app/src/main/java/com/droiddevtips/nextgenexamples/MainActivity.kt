@@ -1,7 +1,6 @@
 package com.droiddevtips.nextgenexamples
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -13,14 +12,23 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.nextgenexamples.googleAdsConsentManager.GoogleAdsConsentManager
 import com.droiddevtips.nextgenexamples.googleAdsConsentManager.OnConsentGatheringCompleteListener
+import com.droiddevtips.nextgenexamples.logging.data.LoggerImpl
+import com.droiddevtips.nextgenexamples.logging.domain.LogLevel
+import com.droiddevtips.nextgenexamples.logging.domain.Logger
+import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import com.droiddevtips.nextgenexamples.navigator.ui.Navigator
 import com.droiddevtips.nextgenexamples.navigator.ui.NavigatorViewModel
 import com.droiddevtips.nextgenexamples.navigator.ui.NavigatorViewModelFactory
-import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import com.droiddevtips.nextgenexamples.ui.theme.DroidDevTipsTheme
 import com.google.android.ump.FormError
 
-class MainActivity : ComponentActivity() {
+/**
+ * Entry point and showcase activity for the Google Mobile Ads (GMA) Next-Gen SDK examples.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
+class MainActivity : ComponentActivity(), Logger by LoggerImpl() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +59,10 @@ class MainActivity : ComponentActivity() {
             override fun consentGatheringComplete(error: FormError?) {
 
                 error?.let {
-                    Log.e("TAG15","${it.errorCode}: ${it.message}")
+                    log(level = LogLevel.Error, message = "${it.errorCode}: ${it.message}")
                 }
 
-                Log.i("TAG15","Can request ads -> ${GoogleAdsConsentManager.canRequestAds()}")
+                log(level = LogLevel.Info, message = "Can request ads -> ${GoogleAdsConsentManager.canRequestAds()}")
             }
         })
     }

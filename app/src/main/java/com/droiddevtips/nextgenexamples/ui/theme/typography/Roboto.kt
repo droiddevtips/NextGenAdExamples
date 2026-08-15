@@ -8,7 +8,7 @@ import com.droiddevtips.nextgenexamples.core.AppFont
 /**
  * This is the Google Roboto typeface
  * Created by Melchior Vrolijk
- * Droid Dev Tips (c) 2025. All rights reserved.
+ * Droid Dev Tips (c) 2026. All rights reserved.
  */
 val roboto = FontFamily(
     Font(resId = AppFont.roboto_regular),
