@@ -30,6 +30,12 @@ import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurren
 import com.droiddevtips.nextgenexamples.navigator.data.NavigatorViewState
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
 
+/**
+ * De demo ad list item composable
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2025. All rights reserved.
+ */
 @Composable
 fun DemoAdListItem(
     viewState: State<NavigatorViewState>,
