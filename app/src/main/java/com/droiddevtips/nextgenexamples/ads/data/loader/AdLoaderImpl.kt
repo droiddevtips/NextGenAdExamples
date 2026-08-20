@@ -1,4 +1,4 @@
-package com.droiddevtips.nextgenexamples.ads.data.preloader
+package com.droiddevtips.nextgenexamples.ads.data.loader
 
 import android.annotation.SuppressLint
 import android.content.Context

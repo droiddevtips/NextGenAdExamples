@@ -19,8 +19,17 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 import com.droiddevtips.nextgenexamples.extensions.addBannerAdRefreshCallback
 import com.droiddevtips.nextgenexamples.extensions.addEventCallback
+import com.droiddevtips.nextgenexamples.logging.data.LoggerImpl
+import com.droiddevtips.nextgenexamples.logging.domain.LogLevel
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.data.BannerAdExampleDisplayItem
+import com.google.android.libraries.ads.mobile.sdk.banner.AdSize
 import com.google.android.libraries.ads.mobile.sdk.banner.AdView
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdEventCallback
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRefreshCallback
+import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdRequest
+import com.google.android.libraries.ads.mobile.sdk.common.AdLoadCallback
+import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 
 /**
  * Load and displays the new [AdView] within the composition based on the preload ID provided.
@@ -85,5 +94,75 @@ fun BannerAdView(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun LoadBannerAdWithoutPreLoader(modifier: Modifier = Modifier) {
+
+    val isPreviewMode = LocalInspectionMode.current
+    if (isPreviewMode) {
+        BannerAdPreview(modifier = modifier)
+        return
+    }
+
+    val logger = remember { LoggerImpl() }
+    val activity = LocalActivity.current
+    if (activity != null) {
+        AndroidView(
+            update = {
+                // Without this sometimes you might get a blank screen
+                it.requestLayout()
+            },
+            factory = { viewContext ->
+
+                val adLoadCallback = object : AdLoadCallback<BannerAd> {
+
+                    override fun onAdLoaded(ad: BannerAd) {
+                        super.onAdLoaded(ad)
+                        logger.log(level = LogLevel.Info, message = "Banner ad successfully loaded!")
+                        ad.let {
+
+                            it.adEventCallback = object : BannerAdEventCallback {
+
+                                override fun onAdImpression() {
+                                    super.onAdImpression()
+                                    logger.log(message = "On ad impression'")
+                                }
+
+                                override fun onAdClicked() {
+                                    super.onAdClicked()
+                                    logger.log(message = "On ad clicked!")
+                                }
+                            }
+
+                            it.bannerAdRefreshCallback = object : BannerAdRefreshCallback {
+
+                                override fun onAdRefreshed() {
+                                    super.onAdRefreshed()
+                                    logger.log(message = "on ad refreshed!")
+                                }
+
+                                override fun onAdFailedToRefresh(adError: LoadAdError) {
+                                    super.onAdFailedToRefresh(adError)
+                                    logger.log(message = "on ad failed to refresh")
+                                }
+                            }
+                        }
+                    }
+
+                    override fun onAdFailedToLoad(adError: LoadAdError) {
+                        super.onAdFailedToLoad(adError)
+                        logger.log(level = LogLevel.Error, message = "Unable to load banner ad, cause: ${adError.message}")
+                    }
+                }
+
+                val adSize = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(activity, 320)
+                val adRequest = BannerAdRequest.Builder(adUnitId = "ca-app-pub-3940256099942544/9214589741", adSize).build()
+
+                AdView(viewContext).apply { loadAd(adRequest,adLoadCallback) }
+            },
+            modifier = Modifier.padding(all = 8.dp)
+        )
     }
 }
