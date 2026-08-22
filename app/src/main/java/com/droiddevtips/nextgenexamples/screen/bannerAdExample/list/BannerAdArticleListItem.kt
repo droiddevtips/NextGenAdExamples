@@ -34,6 +34,7 @@ fun BannerAdArticleListItem(
     when (item) {
         is BannerAdExampleDisplayItem.AdView -> {
             BannerAdView(item = item, adManager = AppAdManager, modifier = modifier)
+//            LoadBannerAdWithoutPreLoader(modifier = modifier)
         }
 
         is BannerAdExampleDisplayItem.Article -> {

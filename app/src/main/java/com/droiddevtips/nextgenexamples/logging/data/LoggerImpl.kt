@@ -10,24 +10,24 @@ import com.droiddevtips.nextgenexamples.logging.domain.Logger
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
-class LoggerImpl: Logger {
+class LoggerImpl(private val className: String) : Logger {
     override fun log(
         level: LogLevel,
         message: String
     ) {
-        val tag = "[Ad Example]"
-        val logMessage = "[${this::class.java}] - $message"
+        val tag = "BannerAd"
+        val logMessage = "[${className}] - $message"
 
-        when(level) {
-            LogLevel.Info -> Log.i(tag,logMessage)
+        when (level) {
+            LogLevel.Info -> Log.i(tag, logMessage)
 
-            LogLevel.Error -> Log.e(tag,logMessage)
+            LogLevel.Error -> Log.e(tag, logMessage)
 
-            LogLevel.Debug -> Log.d(tag,logMessage)
+            LogLevel.Debug -> Log.d(tag, logMessage)
 
-            LogLevel.Verbose -> Log.v(tag,logMessage)
+            LogLevel.Verbose -> Log.v(tag, logMessage)
 
-            LogLevel.Warning -> Log.w(tag,logMessage)
+            LogLevel.Warning -> Log.w(tag, logMessage)
         }
     }
 }

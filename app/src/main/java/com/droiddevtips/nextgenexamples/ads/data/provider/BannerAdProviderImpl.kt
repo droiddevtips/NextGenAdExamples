@@ -22,7 +22,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.ResponseInfo
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
-class BannerAdProviderImpl : BannerAdProvider, Logger by LoggerImpl() {
+class BannerAdProviderImpl : BannerAdProvider, Logger by LoggerImpl(BannerAdProviderImpl::class.java.simpleName) {
 
     override fun preLoadBannerAd(
         context: Context,
@@ -56,13 +56,13 @@ class BannerAdProviderImpl : BannerAdProvider, Logger by LoggerImpl() {
 
         val adSize = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(context, 320)
         val adRequest = BannerAdRequest.Builder(adUnitId = adUnit.adUnit, adSize).build()
-        val preload = PreloadConfiguration(adRequest)
+        val preload = PreloadConfiguration(request = adRequest, bufferSize = 1)
         BannerAdPreloader.start(preloadId = adUnit.key, preloadConfiguration = preload, preloadCallback = preloadCallback)
     }
 
     override fun isAvailable(preLoaderID: String): Boolean {
         val isAvailable = BannerAdPreloader.isAdAvailable(preloadId = preLoaderID)
-        log(message = "Banner ad availability: $isAvailable")
+        log(message = "Banner ad availability: ${if (isAvailable) "'Yes'" else "'No'"} for banner ad with preload ID: '$preLoaderID' number of ads in buffer pool: ${BannerAdPreloader.getNumAdsAvailable(preloadId = preLoaderID)}")
         return isAvailable
     }
 

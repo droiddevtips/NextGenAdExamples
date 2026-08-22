@@ -28,7 +28,7 @@ import com.google.android.ump.FormError
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
-class MainActivity : ComponentActivity(), Logger by LoggerImpl() {
+class MainActivity : ComponentActivity(), Logger by LoggerImpl(className = MainActivity::class.java.simpleName) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -13,7 +13,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 fun BannerAd.addEventCallback(key: String) {
-    val logger = LoggerImpl()
+    val logger = LoggerImpl(className = "BannerAd.addEventCallback extensions func")
     adEventCallback = object : BannerAdEventCallback {
 
         override fun onAdImpression() {
@@ -29,7 +29,7 @@ fun BannerAd.addEventCallback(key: String) {
 }
 
 fun BannerAd.addBannerAdRefreshCallback(key: String) {
-    val logger = LoggerImpl()
+    val logger = LoggerImpl("BannerAd.addBannerAdRefreshCallback extensions func")
     bannerAdRefreshCallback = object : BannerAdRefreshCallback {
 
         override fun onAdRefreshed() {

@@ -106,7 +106,7 @@ fun LoadBannerAdWithoutPreLoader(modifier: Modifier = Modifier) {
         return
     }
 
-    val logger = remember { LoggerImpl() }
+    val logger = remember { LoggerImpl("LoadBannerAdWithoutPreLoader composable") }
     val activity = LocalActivity.current
     if (activity != null) {
         AndroidView(
