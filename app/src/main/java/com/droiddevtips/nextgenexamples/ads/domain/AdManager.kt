@@ -2,6 +2,8 @@ package com.droiddevtips.nextgenexamples.ads.domain
 
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
+import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Central entry point for loading, showing, and managing ads across the application.
@@ -15,6 +17,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
  */
 interface AdManager {
 
+    val interstitialAdsAvailable: StateFlow<Int>
 
     fun init(adLoader: AdLoader)
 
@@ -22,5 +25,10 @@ interface AdManager {
 
     fun preLoadBannerAd(adUnit: AdUnit)
     fun clearAllCacheBannerAds(adUnits: List<AdUnit>)
+
+    fun getInterstitialAd(preLoaderID:String): InterstitialAd?
+
+    fun preLoadInterstitialAd(adUnit: AdUnit)
+    fun destroyInterstitialAd(adUnit: AdUnit)
 
 }

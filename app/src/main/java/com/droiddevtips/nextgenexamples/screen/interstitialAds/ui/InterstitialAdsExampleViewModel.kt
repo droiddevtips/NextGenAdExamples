@@ -2,6 +2,8 @@ package com.droiddevtips.nextgenexamples.screen.interstitialAds.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.droiddevtips.nextgenexamples.ads.domain.AdManager
+import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdArticle
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsExampleViewState
@@ -11,9 +13,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.time.Duration.Companion.seconds
 
@@ -24,12 +28,28 @@ import kotlin.time.Duration.Companion.seconds
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
-class InterstitialAdsExampleViewModel : ViewModel() {
+class InterstitialAdsExampleViewModel(
+    private val adManager: AdManager
+) : ViewModel() {
 
     private val _viewState = MutableStateFlow(InterstitialAdsExampleViewState())
     val viewState: StateFlow<InterstitialAdsExampleViewState> = _viewState.asStateFlow().onStart {
         loadArticleListItems()
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(1000L), InterstitialAdsExampleViewState())
+
+    init {
+        adManager.preLoadInterstitialAd(adUnit = AdUnit.InterstitialAd)
+
+        viewModelScope.launch {
+            adManager.interstitialAdsAvailable.collectLatest { adAvailable ->
+                _viewState.update { it.copy(interstitialAvailable = adAvailable) }
+            }
+        }
+    }
+
+    override fun onCleared() {
+        adManager.destroyInterstitialAd(AdUnit.InterstitialAd)
+    }
 
     suspend fun loadArticleListItems() = withContext(Dispatchers.IO) {
 

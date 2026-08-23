@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -30,6 +31,7 @@ import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.Interstitial
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.detail.InterstitialAdArticleDetail
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.grid.InterstitialAdsGridExample
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.ui.InterstitialAdsExampleViewModel
+import com.droiddevtips.nextgenexamples.screen.interstitialAds.ui.InterstitialAdsExampleViewModelFactory
 
 /**
  * The interstitial ads example composable, hosting the 'list' (grid) and 'detail' routes
@@ -63,13 +65,14 @@ fun InterstitialAdsExample(screen: Screen, modifier: Modifier = Modifier) {
                     modifier = Modifier.size(20.dp)
                 )
 
-                Text(text = screen.title)
+                Text(text = screen.title, fontWeight = FontWeight.Bold)
 
             }
         }
     }) { paddingValues ->
 
-        val viewModel: InterstitialAdsExampleViewModel = viewModel()
+        val viewModel: InterstitialAdsExampleViewModel =
+            viewModel(factory = InterstitialAdsExampleViewModelFactory())
         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
 
         NavHost(

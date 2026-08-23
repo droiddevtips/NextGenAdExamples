@@ -35,12 +35,14 @@ import com.droiddevtips.nextgenexamples.ui.theme.DroidDevTipsTheme
 fun InterstitialAdsGridListItem(
     item: InterstitialAdArticle,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {}
+    onArticleClick: (InterstitialAdArticle) -> Unit = {}
 ) {
 
     val isPreviewMode = LocalInspectionMode.current
 
-    Card(onClick = onClick, modifier = modifier) {
+    Card(onClick = {
+        onArticleClick(item)
+    }, modifier = modifier) {
 
         Image(
             painter = painterResource(id = item.featureImage),

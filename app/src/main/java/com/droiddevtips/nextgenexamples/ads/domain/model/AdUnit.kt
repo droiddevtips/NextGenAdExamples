@@ -13,5 +13,5 @@ import kotlinx.parcelize.Parcelize
 sealed class AdUnit(val key: String, val adUnit: String): Parcelable {
 
     data class BannerAd(private val _key: String) : AdUnit(key = "banner_ad_$_key", adUnit = "ca-app-pub-3940256099942544/9214589741")
-
+    data object InterstitialAd: AdUnit(key = "interstitial_ad_1", adUnit = "ca-app-pub-3940256099942544/1033173712")
 }

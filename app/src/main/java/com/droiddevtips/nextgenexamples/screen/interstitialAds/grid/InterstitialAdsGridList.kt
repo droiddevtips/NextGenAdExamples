@@ -38,7 +38,7 @@ fun InterstitialAdsGridList(
             InterstitialAdsGridListItem(
                 item = item,
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { onArticleClick(item) }
+                onArticleClick = onArticleClick
             )
         }
     }

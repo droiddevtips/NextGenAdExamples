@@ -5,6 +5,7 @@ import android.util.Log
 import com.droiddevtips.nextgenexamples.ads.data.manager.AppAdManager
 import com.droiddevtips.nextgenexamples.ads.data.loader.AdLoaderImpl
 import com.droiddevtips.nextgenexamples.ads.data.provider.BannerAdProviderImpl
+import com.droiddevtips.nextgenexamples.ads.data.provider.InterstitialAdProviderImpl
 import com.droiddevtips.nextgenexamples.googleAdsConsentManager.GoogleAdsConsentManager
 import com.google.android.libraries.ads.mobile.sdk.MobileAds
 import com.google.android.libraries.ads.mobile.sdk.initialization.InitializationConfig
@@ -33,7 +34,13 @@ class App : Application() {
             Log.i("TAG12","Mobile Ads init status -> $test")
         }
 
-        AppAdManager.init(adLoader = AdLoaderImpl.also { it.init(context = applicationContext, bannerAdProvider = BannerAdProviderImpl()) })
+        AppAdManager.init(adLoader = AdLoaderImpl.also {
+            it.init(
+                context = applicationContext,
+                bannerAdProvider = BannerAdProviderImpl(),
+                interstitialAdProvider = InterstitialAdProviderImpl()
+            )
+        })
 
     }
 

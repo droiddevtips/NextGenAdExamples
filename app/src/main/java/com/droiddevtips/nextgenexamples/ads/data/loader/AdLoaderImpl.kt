@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.droiddevtips.nextgenexamples.ads.domain.AdLoader
 import com.droiddevtips.nextgenexamples.ads.domain.BannerAdProvider
+import com.droiddevtips.nextgenexamples.ads.domain.InterstitialAdProvider
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdPreloader
+import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
+import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdPreloader
 import java.util.concurrent.ConcurrentHashMap
 
 /**
@@ -24,17 +27,21 @@ import java.util.concurrent.ConcurrentHashMap
 object AdLoaderImpl: AdLoader {
 
     private var bannerAdProvider: BannerAdProvider? = null
+    private var interstitialAdProvider: InterstitialAdProvider? = null
     private val cachedBannerAd = ConcurrentHashMap<String, BannerAd>()
+    private var interstitialServed: InterstitialAd? = null
     private var context: Context? = null
 
-    override fun init(context: Context, bannerAdProvider: BannerAdProvider) {
+    override fun init(context: Context, bannerAdProvider: BannerAdProvider, interstitialAdProvider: InterstitialAdProvider) {
         this.context = context
         this.bannerAdProvider = bannerAdProvider
+        this.interstitialAdProvider = interstitialAdProvider
     }
 
     override fun preLoadBannerAd(
-        adUnit: AdUnit
+        adUnit: AdUnit.BannerAd
     ) {
+
         requireNotNull(context) { "AdLoaderImpl.init() not called!" }
         requireNotNull(bannerAdProvider) { "AdLoaderImpl.init() not called!" }
         context?.let {
@@ -51,18 +58,17 @@ object AdLoaderImpl: AdLoader {
             val newBannerAd = bannerAdProvider?.pollBannerAd(preLoaderID = preLoaderID)
 
             return newBannerAd?.let {
-                destroyCacheBannerAd(preloadID = preLoaderID)
-                updateCacheBannerAd(preloadID = preLoaderID, bannerAd = it)
+                destroyCacheAd(type = AdType.BannerAd(preloadID = preLoaderID))
+                cachedBannerAd[preLoaderID] = it
                 it
-            }?: retrieveCacheBannerAd(preloadID = preLoaderID)
+            }?: cachedBannerAd[preLoaderID]
         }
 
-        return retrieveCacheBannerAd(preloadID = preLoaderID)
+        return cachedBannerAd[preLoaderID]
     }
 
     override fun removeCacheBannerAd(adUnit: AdUnit): Boolean {
-        destroyCacheBannerAd(preloadID = adUnit.key)
-        removeCacheBannerAd(preloadID = adUnit.key)
+        destroyCacheAd(type = AdType.BannerAd(preloadID = adUnit.key))
         return BannerAdPreloader.destroy(adUnit.key)
     }
 
@@ -72,19 +78,37 @@ object AdLoaderImpl: AdLoader {
         }
     }
 
-    private fun destroyCacheBannerAd(preloadID:String) {
-        cachedBannerAd[preloadID]?.destroy()
+    override fun preLoadInterstitialAd(adUnit: AdUnit.InterstitialAd, interstitialAdCount: (Int) -> Unit) {
+        context?.let {
+            interstitialAdProvider?.preLoadInterstitialAd(context = it, adUnit = adUnit) { adCount ->
+                interstitialAdCount(adCount)
+            }
+        }
     }
 
-    private fun removeCacheBannerAd(preloadID:String) {
-        cachedBannerAd.remove(preloadID)
+    override fun getInterstitialAd(preLoaderID: String): InterstitialAd? {
+
+        val preLoaderInterstitialAd = interstitialAdProvider?.pollInterstitialAd(preLoaderID = preLoaderID)
+
+        this.interstitialServed = preLoaderInterstitialAd
+
+        return preLoaderInterstitialAd
     }
 
-    private fun updateCacheBannerAd(preloadID:String, bannerAd: BannerAd) {
-        cachedBannerAd[preloadID] = bannerAd
-    }
+    override fun destroyInterstitialAd(adUnit: AdUnit): Boolean = InterstitialAdPreloader.destroy(preloadId = adUnit.key)
 
-    private fun retrieveCacheBannerAd(preloadID:String): BannerAd? {
-        return cachedBannerAd[preloadID]
+    private fun destroyCacheAd(type: AdType) {
+
+        when(type) {
+
+            is AdType.BannerAd -> {
+                cachedBannerAd.remove(type.preloadID)?.destroy()
+            }
+
+            is AdType.InterstitialAd -> {
+                interstitialServed?.destroy()
+                interstitialServed = null
+            }
+        }
     }
 }

@@ -12,5 +12,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class InterstitialAdsExampleViewState(
     val isLoading: Boolean = true,
-    val articles: List<InterstitialAdArticle> = emptyList()
+    val articles: List<InterstitialAdArticle> = emptyList(),
+    val interstitialAvailable: Int = 0
 ) : Parcelable
