@@ -43,16 +43,13 @@ fun DemoAdListItem(
     modifier: Modifier = Modifier,
     onItemClicked: (Screen) -> Unit
 ) {
-
-    val currentDeviceWindowSize = deviceDetectorCurrentWindowSize()
-
     Row(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(8.dp)
             ).then(
-                if (currentDeviceWindowSize.device is Device.Tablet && viewState.value.selectedItem == item) {
+                if (viewState.value.selectedItem == item) {
                     Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
                 } else {
                     Modifier
