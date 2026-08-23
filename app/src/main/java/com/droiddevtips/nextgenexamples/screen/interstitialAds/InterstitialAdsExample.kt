@@ -10,20 +10,30 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
+import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsRoute
+import com.droiddevtips.nextgenexamples.screen.interstitialAds.detail.InterstitialAdArticleDetail
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.grid.InterstitialAdsGridExample
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.ui.InterstitialAdsExampleViewModel
 
 /**
- * The interstitial ads example composable
+ * The interstitial ads example composable, hosting the 'list' (grid) and 'detail' routes
+ * of the interstitial ads example nav host.
  *
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
@@ -32,9 +42,12 @@ import com.droiddevtips.nextgenexamples.screen.interstitialAds.ui.InterstitialAd
 fun InterstitialAdsExample(screen: Screen, modifier: Modifier = Modifier) {
 
     val windowSize = deviceDetectorCurrentWindowSize()
+    val navController = rememberNavController()
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val isListRoute = currentBackStackEntry?.destination?.hasRoute<InterstitialAdsRoute.List>() ?: true
 
     Scaffold(modifier = modifier, topBar = {
-        if (windowSize.device is Device.Mobile) {
+        if (windowSize.device is Device.Mobile && isListRoute) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(
@@ -59,11 +72,33 @@ fun InterstitialAdsExample(screen: Screen, modifier: Modifier = Modifier) {
         val viewModel: InterstitialAdsExampleViewModel = viewModel()
         val viewState = viewModel.viewState.collectAsStateWithLifecycle()
 
-        InterstitialAdsGridExample(
-            viewState = viewState.value,
+        NavHost(
+            navController = navController,
+            startDestination = InterstitialAdsRoute.List,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-        )
+        ) {
+            composable<InterstitialAdsRoute.List> {
+                InterstitialAdsGridExample(
+                    viewState = viewState.value,
+                    onArticleClick = { article ->
+                        navController.navigate(InterstitialAdsRoute.Detail(articleKey = article.key))
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+
+            composable<InterstitialAdsRoute.Detail> { backStackEntry ->
+                val route: InterstitialAdsRoute.Detail = backStackEntry.toRoute()
+                val article = viewState.value.articles.firstOrNull { it.key == route.articleKey }
+
+                InterstitialAdArticleDetail(
+                    article = article,
+                    onBackClick = { navController.popBackStack() },
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
     }
 }
