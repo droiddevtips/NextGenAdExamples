@@ -66,7 +66,6 @@ fun BannerAdExample(screen: Screen, modifier: Modifier = Modifier) {
 
         val pagerState = rememberPagerState(pageCount = { bannerAdTabTitles.size })
         val coroutineScope = rememberCoroutineScope()
-        val context = LocalContext.current.applicationContext
 
         Column(modifier = modifier.padding(paddingValues)) {
             PrimaryTabRow(

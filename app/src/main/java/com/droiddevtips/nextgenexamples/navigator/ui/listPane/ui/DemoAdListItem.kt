@@ -26,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
+import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.navigator.data.NavigatorViewState
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
@@ -43,13 +44,17 @@ fun DemoAdListItem(
     modifier: Modifier = Modifier,
     onItemClicked: (Screen) -> Unit
 ) {
+    val windowSize = deviceDetectorCurrentWindowSize()
+
     Row(
         modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.secondaryContainer,
                 shape = RoundedCornerShape(8.dp)
             ).then(
-                if (viewState.value.selectedItem == item) {
+                if (windowSize.device is Device.Mobile && windowSize.orientation is DeviceOrientation.Portrait) {
+                    Modifier
+                } else if (viewState.value.selectedItem == item) {
                     Modifier.border(width = 2.dp, color = MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(8.dp))
                 } else {
                     Modifier

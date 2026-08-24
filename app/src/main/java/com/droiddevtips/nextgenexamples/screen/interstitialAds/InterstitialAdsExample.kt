@@ -1,5 +1,6 @@
 package com.droiddevtips.nextgenexamples.screen.interstitialAds
 
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -27,11 +30,15 @@ import androidx.navigation.toRoute
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
+import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsExampleViewModelAction
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsRoute
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.detail.InterstitialAdArticleDetail
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.grid.InterstitialAdsGridExample
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.ui.InterstitialAdsExampleViewModel
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.ui.InterstitialAdsExampleViewModelFactory
+import com.droiddevtips.nextgenexamples.screen.interstitialAds.ui.InterstitialLauncher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * The interstitial ads example composable, hosting the 'list' (grid) and 'detail' routes
@@ -47,6 +54,12 @@ fun InterstitialAdsExample(screen: Screen, modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val isListRoute = currentBackStackEntry?.destination?.hasRoute<InterstitialAdsRoute.List>() ?: true
+    val scope = rememberCoroutineScope()
+    val activity = LocalActivity.current
+
+    val viewModel: InterstitialAdsExampleViewModel =
+        viewModel(factory = InterstitialAdsExampleViewModelFactory())
+    val viewState = viewModel.viewState.collectAsStateWithLifecycle()
 
     Scaffold(modifier = modifier, topBar = {
         if (windowSize.device is Device.Mobile && isListRoute) {
@@ -71,10 +84,6 @@ fun InterstitialAdsExample(screen: Screen, modifier: Modifier = Modifier) {
         }
     }) { paddingValues ->
 
-        val viewModel: InterstitialAdsExampleViewModel =
-            viewModel(factory = InterstitialAdsExampleViewModelFactory())
-        val viewState = viewModel.viewState.collectAsStateWithLifecycle()
-
         NavHost(
             navController = navController,
             startDestination = InterstitialAdsRoute.List,
@@ -86,7 +95,11 @@ fun InterstitialAdsExample(screen: Screen, modifier: Modifier = Modifier) {
                 InterstitialAdsGridExample(
                     viewState = viewState.value,
                     onArticleClick = { article ->
-                        navController.navigate(InterstitialAdsRoute.Detail(articleKey = article.key))
+                        InterstitialLauncher.launchInterstitial(activity = activity) {
+                            scope.launch(Dispatchers.Main) {
+                                navController.navigate(InterstitialAdsRoute.Detail(articleKey = article.key))
+                            }
+                        }
                     },
                     modifier = Modifier.fillMaxSize()
                 )
@@ -102,6 +115,12 @@ fun InterstitialAdsExample(screen: Screen, modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxSize()
                 )
             }
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.performAction(action = InterstitialAdsExampleViewModelAction.DestroyAllBannerAds)
         }
     }
 }

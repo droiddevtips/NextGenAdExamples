@@ -6,6 +6,7 @@ import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdArticle
+import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsExampleViewModelAction
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsExampleViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -47,10 +48,6 @@ class InterstitialAdsExampleViewModel(
         }
     }
 
-    override fun onCleared() {
-        adManager.destroyInterstitialAd(AdUnit.InterstitialAd)
-    }
-
     suspend fun loadArticleListItems() = withContext(Dispatchers.IO) {
 
         val itemList = (1..100).map { itemNumber ->
@@ -64,6 +61,14 @@ class InterstitialAdsExampleViewModel(
             delay(2.seconds)
             _viewState.update {
                 it.copy(isLoading = false)
+            }
+        }
+    }
+
+    fun performAction(action: InterstitialAdsExampleViewModelAction) {
+        when(action) {
+            InterstitialAdsExampleViewModelAction.DestroyAllBannerAds -> {
+                adManager.destroyInterstitialAd(AdUnit.InterstitialAd)
             }
         }
     }
