@@ -7,5 +7,5 @@ package com.droiddevtips.nextgenexamples.navigator.data
  * Droid Dev Tips (c) 2025. All rights reserved.
  */
 sealed interface NavigatorViewAction {
-    data class SetSelectedItem(val screen: Screen): NavigatorViewAction
+    data class SetSelectedItem(val screen: Screen?): NavigatorViewAction
 }

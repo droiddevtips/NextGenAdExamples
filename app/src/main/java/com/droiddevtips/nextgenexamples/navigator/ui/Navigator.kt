@@ -12,6 +12,7 @@ import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
 import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -52,7 +53,6 @@ fun Navigator(
                         .fillMaxHeight()
                         .fillMaxWidth()
                 ) { route ->
-                    navigatorViewAction(NavigatorViewAction.SetSelectedItem(screen = route))
                     scope.launch {
                         navigator.navigateTo(ListDetailPaneScaffoldRole.Detail, route)
                     }
@@ -70,4 +70,8 @@ fun Navigator(
             }
         }
     )
+
+    LaunchedEffect(navigator.currentDestination) {
+        navigatorViewAction(NavigatorViewAction.SetSelectedItem(screen = navigator.currentDestination?.contentKey))
+    }
 }
