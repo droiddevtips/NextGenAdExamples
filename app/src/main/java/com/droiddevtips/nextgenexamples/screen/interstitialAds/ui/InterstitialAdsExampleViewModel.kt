@@ -1,12 +1,12 @@
 package com.droiddevtips.nextgenexamples.screen.interstitialAds.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdArticle
-import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsExampleViewModelAction
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsExampleViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -65,14 +65,10 @@ class InterstitialAdsExampleViewModel(
         }
     }
 
-    fun performAction(action: InterstitialAdsExampleViewModelAction) {
-        when(action) {
-            InterstitialAdsExampleViewModelAction.DestroyAllBannerAds -> {
-                adManager.destroyInterstitialAd(AdUnit.InterstitialAd)
-            }
-        }
+    override fun onCleared() {
+        super.onCleared()
+        adManager.destroyInterstitialAd(AdUnit.InterstitialAd)
     }
-
     private val dummyArticles = listOf(
         InterstitialAdArticle(key = 0, flag = Drawable.france_flag, featureImage = Drawable.paris, title = "The Eiffel Tower", description = "The Eiffel Tower (French: Tour Eiffel) is a wrought-iron lattice tower located on the Champ de Mars in Paris, France. Widely recognized as the ultimate symbol of Paris and a global cultural icon of France, it is one of the most-visited monuments in the world."),
         InterstitialAdArticle(key = 0, flag = Drawable.nl_flag, featureImage = Drawable.amsterdam, title = "Amsterdam", description = "Amsterdam, the capital and most populous city of the Netherlands, is a vibrant metropolis renowned for its artistic heritage, elaborate canal systems, and narrow canal houses with gabled facades. Located in the province of North Holland, the city blends rich history with a progressive, modern lifestyle."),

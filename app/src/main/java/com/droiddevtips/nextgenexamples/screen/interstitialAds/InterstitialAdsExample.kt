@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -30,7 +29,6 @@ import androidx.navigation.toRoute
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
-import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsExampleViewModelAction
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.data.InterstitialAdsRoute
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.detail.InterstitialAdArticleDetail
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.grid.InterstitialAdsGridExample
@@ -115,12 +113,6 @@ fun InterstitialAdsExample(screen: Screen, modifier: Modifier = Modifier) {
                     modifier = Modifier.fillMaxSize()
                 )
             }
-        }
-    }
-
-    DisposableEffect(Unit) {
-        onDispose {
-            viewModel.performAction(action = InterstitialAdsExampleViewModelAction.DestroyAllBannerAds)
         }
     }
 }
