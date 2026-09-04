@@ -10,7 +10,7 @@ import com.droiddevtips.nextgenexamples.ads.data.manager.AppAdManager
 /**
  * Factory for creating instances of [InterstitialAdsExampleViewModel].
  *
- * Since [InterstitialAdsExampleViewModel] requires dependencies (such as [AdManager])
+ * Since [InterstitialAdsExampleViewModel] requires dependencies (such as AdManager)
  * that cannot be resolved by the default no-argument [ViewModelProvider.Factory],
  * this factory manually constructs the ViewModel and injects the required
  * dependencies.

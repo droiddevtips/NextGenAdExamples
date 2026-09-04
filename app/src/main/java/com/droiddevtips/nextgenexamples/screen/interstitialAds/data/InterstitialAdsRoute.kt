@@ -1,7 +1,5 @@
 package com.droiddevtips.nextgenexamples.screen.interstitialAds.data
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 /**

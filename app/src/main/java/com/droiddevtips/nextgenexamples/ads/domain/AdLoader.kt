@@ -14,7 +14,7 @@ import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
  *
  * An [AdLoader] is intentionally unaware of caching, preloading, or display
  * concerns — those are handled by higher-level components such as
- * [BannerAdPreloader] or [AdManager]. This keeps ad-loading logic isolated
+ * BannerAdPreloader or [AdManager]. This keeps ad-loading logic isolated
  * and testable independently of ad lifecycle and presentation.
  *
  * Created by Melchior Vrolijk
