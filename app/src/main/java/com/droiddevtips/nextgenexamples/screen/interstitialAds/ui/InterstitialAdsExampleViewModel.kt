@@ -1,6 +1,5 @@
 package com.droiddevtips.nextgenexamples.screen.interstitialAds.ui
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevtips.nextgenexamples.ads.domain.AdManager
@@ -66,7 +65,6 @@ class InterstitialAdsExampleViewModel(
     }
 
     override fun onCleared() {
-        super.onCleared()
         adManager.destroyInterstitialAd(AdUnit.InterstitialAd)
     }
     private val dummyArticles = listOf(
