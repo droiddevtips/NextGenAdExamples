@@ -6,4 +6,5 @@
     <string name="no_ads">No banner ad available at the moment</string>
     <string name="coming_soon">Coming soon</string>
     <string name="no_item_selected">No item selected</string>
+    <string name="icon_ad_text">Google Ads (formerly known as Google AdWords) is an online advertising platform developed by Google. It allows businesses to display brief advertisements, service offerings, product listings, and videos to users across Google’s vast network of search results, websites, and apps.\n\nAt its core, Google Ads operates on a Pay-Per-Click (PPC) model, meaning the advertiser only pays when a user actually clicks on the ad.</string>
 </resources>
