@@ -1,13 +1,18 @@
 package com.droiddevtips.nextgenexamples.screen.iconAds
 
+import android.graphics.Color
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,6 +48,7 @@ fun IconAdsExample(screen: Screen, modifier: Modifier = Modifier) {
 
     val firstChar = description.take(1)
     val remainingText = description.drop(1)
+    val scroll = rememberScrollState()
 
     Scaffold(modifier = modifier, topBar = {
         if (windowSize.device is Device.Mobile) {
@@ -66,35 +72,45 @@ fun IconAdsExample(screen: Screen, modifier: Modifier = Modifier) {
             }
         }
     }) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(32.dp)
-        ) {
 
-            Image(
-                painter = painterResource(id = Drawable.google_ad_icon),
-                contentDescription = null,
-                modifier = Modifier.size(170.dp)
-            )
+        Box(modifier = Modifier.padding(paddingValues).fillMaxSize().background(color = androidx.compose.ui.graphics.Color.Green)) {
+            Column(
+                modifier = Modifier
+                    .verticalScroll(scroll)
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(32.dp)
+            ) {
 
-            val annotatedString = buildAnnotatedString {
+                Image(
+                    painter = painterResource(id = Drawable.google_ad_icon),
+                    contentDescription = null,
+                    modifier = Modifier.size(170.dp)
+                )
 
-                withStyle(style = SpanStyle(
-                    fontSize = 40.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(id = AppColor.google_ad_blue)
-                )) {
-                    append(firstChar)
+                val annotatedString = buildAnnotatedString {
+
+                    withStyle(
+                        style = SpanStyle(
+                            fontSize = 40.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(id = AppColor.google_ad_blue)
+                        )
+                    ) {
+                        append(firstChar)
+                    }
+
+                    append(remainingText)
                 }
 
-                append(remainingText)
+                Text(text = annotatedString, modifier = Modifier.padding(all = 16.dp))
             }
 
-            Text(text = annotatedString, modifier = Modifier.padding(all = 16.dp))
+            IconAdView(modifier = Modifier.align(alignment = Alignment.BottomCenter))
+
         }
+
+
     }
 }
