@@ -1,6 +1,5 @@
 package com.droiddevtips.nextgenexamples.screen.iconAds
 
-import android.graphics.Color
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +17,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -68,12 +69,23 @@ fun IconAdsExample(screen: Screen, modifier: Modifier = Modifier) {
                 )
 
                 Text(text = screen.title)
-
             }
         }
     }) { paddingValues ->
-
-        Box(modifier = Modifier.padding(paddingValues).fillMaxSize().background(color = androidx.compose.ui.graphics.Color.Green)) {
+        Box(
+            modifier = Modifier
+                .padding(paddingValues)
+                .fillMaxSize()
+                .background(
+                    brush = Brush.linearGradient(
+                        colors = listOf(
+                            Color.LightGray,
+                            Color.White,
+                            Color.LightGray
+                        )
+                    )
+                )
+        ) {
             Column(
                 modifier = Modifier
                     .verticalScroll(scroll)
@@ -105,12 +117,9 @@ fun IconAdsExample(screen: Screen, modifier: Modifier = Modifier) {
                 }
 
                 Text(text = annotatedString, modifier = Modifier.padding(all = 16.dp))
+
+                IconAdView(modifier = Modifier)
             }
-
-            IconAdView(modifier = Modifier.align(alignment = Alignment.BottomCenter))
-
         }
-
-
     }
 }
