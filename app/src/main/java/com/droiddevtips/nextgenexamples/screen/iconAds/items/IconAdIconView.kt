@@ -21,10 +21,6 @@ fun IconAdIconView(
 
     val drawable = iconAd.icon.drawable ?: return
 
-    // icon.scale is documented as "the ratio of pixels to dp" for this drawable, i.e.
-    // scale = px / dp. The drawable's intrinsic size is in px, so dividing by scale gives
-    // the exact size the SDK intends the icon to be displayed at, independent of the
-    // device's own density (no LocalDensity conversion needed here).
     val scale = iconAd.icon.scale
     val iconWidthDp = ((drawable.intrinsicWidth/2.5f) / scale).dp
     val iconHeightDp = ((drawable.intrinsicHeight/2.5f) / scale).dp
@@ -53,15 +49,5 @@ fun IconAdIconView(
             }.also {
                 iconAdView.iconView = it
             }
-
-            /*
-            ComposeView(context).apply {
-                setContent {
-
-                }
-            }.also {
-                iconAdView.iconView = it
-            }
-            */
         })
 }
