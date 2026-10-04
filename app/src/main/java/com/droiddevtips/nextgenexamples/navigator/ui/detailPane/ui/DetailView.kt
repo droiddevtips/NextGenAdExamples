@@ -9,6 +9,7 @@ import com.droiddevtips.nextgenexamples.screen.iconAds.IconAdsExample
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.InterstitialAdsExample
 import com.droiddevtips.nextgenexamples.screen.nativeAdExample.NativeAdExample
 import com.droiddevtips.nextgenexamples.screen.rewardedInterstitialAds.RewardedInterstitialAdsExample
+import com.droiddevtips.nextgenexamples.screen.swipeable_ad.SwipeableScreen
 
 /**
  * De list-detail detail view composables options
@@ -24,8 +25,9 @@ fun DetailView(screen: Screen, modifier: Modifier = Modifier) {
         Screen.EmptyScreen -> EmptyScreen(modifier = modifier)
         Screen.IconAd -> IconAdsExample(screen = screen, modifier = modifier)
         Screen.InterstitialAds -> InterstitialAdsExample(screen = screen, modifier = modifier)
-        Screen.NativeAdExample -> NativeAdExample(modifier = modifier)
+        Screen.SwipeableAds -> SwipeableScreen(screen = screen, modifier = modifier)
         Screen.NoItemSelected -> EmptyScreen(modifier = modifier)
-        Screen.RewardedInterstitialAdExample -> RewardedInterstitialAdsExample(modifier = modifier)
+//        Screen.NativeAdExample -> NativeAdExample(modifier = modifier)
+//        Screen.RewardedInterstitialAdExample -> RewardedInterstitialAdsExample(modifier = modifier)
     }
 }
