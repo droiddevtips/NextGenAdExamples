@@ -7,8 +7,6 @@ import com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui.BannerAdExampl
 import com.droiddevtips.nextgenexamples.screen.emptyScreen.EmptyScreen
 import com.droiddevtips.nextgenexamples.screen.iconAds.IconAdsExample
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.InterstitialAdsExample
-import com.droiddevtips.nextgenexamples.screen.nativeAdExample.NativeAdExample
-import com.droiddevtips.nextgenexamples.screen.rewardedInterstitialAds.RewardedInterstitialAdsExample
 import com.droiddevtips.nextgenexamples.screen.swipeable_ad.SwipeableScreen
 
 /**
