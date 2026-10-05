@@ -1,8 +1,12 @@
+@file:OptIn(ExperimentalApi::class)
+
 package com.droiddevtips.nextgenexamples.screen.swipeable_ad
 
+import android.util.Log
+import android.view.ViewGroup
+import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,17 +24,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.droiddevtips.appwindowsizeandorientationdetector.Device
 import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
+import com.droiddevtips.nextgenexamples.ads.data.manager.AppAdManager
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
+import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 
 @Composable
 fun SwipeableScreen(screen: Screen, modifier: Modifier = Modifier) {
 
+    val activity = LocalActivity.current
     val windowSize = deviceDetectorCurrentWindowSize()
     val viewModel: ImageGalleryViewModel =
-        viewModel(factory = ImageGalleryViewModelFactory())
+        viewModel(factory = ImageGalleryViewModelFactory(adManager = AppAdManager))
     val pagerState = rememberPagerState(pageCount = { viewModel.images.size })
 
     Scaffold(modifier = modifier, topBar = {
@@ -70,18 +78,37 @@ fun SwipeableScreen(screen: Screen, modifier: Modifier = Modifier) {
                 )
             ) { page ->
 
-                Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center
+                ) {
 
                     val item = viewModel.getImage(page = page)
 
-                    if (item is GalleryItem.Image) {
-                        Image(
-                            painter = painterResource(item.image),
-                            modifier = Modifier.fillMaxWidth(),
-                            contentDescription = null
-                        )
-                    } else {
-                        Text("Page $page")
+                    Log.i("TAG35","Item -> $item")
+
+                    when (item) {
+                        is GalleryItem.Ad -> {
+                            activity?.let {
+                                AndroidView(
+                                    modifier = Modifier.fillMaxSize(),
+                                    factory = {
+                                    item.swipeAd.getView(activity).also { view ->
+                                        (view.parent as? ViewGroup)?.removeView(view)
+                                    }
+                                })
+                            } ?: run {
+                                Text("Page $page")
+                            }
+                        }
+
+                        is GalleryItem.Image -> {
+                            Image(
+                                painter = painterResource(item.image),
+                                modifier = Modifier.fillMaxWidth(),
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             }

@@ -5,6 +5,7 @@ package com.droiddevtips.nextgenexamples.screen.swipeable_ad
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 
 /**
  * Factory for creating instances of [ImageGalleryViewModel].
@@ -17,12 +18,12 @@ import androidx.lifecycle.viewmodel.CreationExtras
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.
  */
-class ImageGalleryViewModelFactory : ViewModelProvider.Factory {
+class ImageGalleryViewModelFactory(private val adManager: AdManager) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
 
         if (modelClass.isAssignableFrom(ImageGalleryViewModel::class.java)) {
-            return ImageGalleryViewModel() as T  // adManager = AppAdManager
+            return ImageGalleryViewModel(adManager = adManager) as T
         }
 
         throw IllegalArgumentException("Not ${ImageGalleryViewModel::class.simpleName} class")

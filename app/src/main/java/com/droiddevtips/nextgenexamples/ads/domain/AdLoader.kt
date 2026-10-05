@@ -1,9 +1,13 @@
+@file:OptIn(ExperimentalApi::class)
+
 package com.droiddevtips.nextgenexamples.ads.domain
 
 import android.content.Context
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
+import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
+import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 
 /**
  * Loads ads for a given [AdUnit], abstracting away the underlying ad SDK.
@@ -22,7 +26,7 @@ import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
  */
 interface AdLoader {
 
-    fun init(context: Context, bannerAdProvider: BannerAdProvider, interstitialAdProvider: InterstitialAdProvider)
+    fun init(context: Context, bannerAdProvider: BannerAdProvider, interstitialAdProvider: InterstitialAdProvider, swipeableInterstitialAdProvider: SwipeableInterstitialAdProvider)
     fun preLoadBannerAd(adUnit: AdUnit.BannerAd)
     fun getBannerAd(preLoaderID: String): BannerAd?
     fun removeCacheBannerAd(adUnit: AdUnit): Boolean
@@ -30,5 +34,6 @@ interface AdLoader {
     fun preLoadInterstitialAd(adUnit: AdUnit.InterstitialAd, interstitialAdCount: (Int) -> Unit)
     fun getInterstitialAd(preLoaderID: String): InterstitialAd?
     fun destroyInterstitialAd(adUnit: AdUnit): Boolean
+    suspend fun loadSwipeableInterstitialAd(adUnit: AdUnit): SwipeableInterstitialAd?
 
 }

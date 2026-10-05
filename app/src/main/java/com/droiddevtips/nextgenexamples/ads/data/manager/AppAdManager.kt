@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalApi::class)
+
 package com.droiddevtips.nextgenexamples.ads.data.manager
 
 import com.droiddevtips.nextgenexamples.ads.domain.AdLoader
@@ -5,8 +7,10 @@ import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.droiddevtips.nextgenexamples.googleAdsConsentManager.GoogleAdsConsentManager
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
+import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdPreloader
+import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -80,6 +84,8 @@ object AppAdManager: AdManager {
         adLoader?.destroyInterstitialAd(adUnit = adUnit)
         _interstitialAdsAvailable.value = InterstitialAdPreloader.getNumAdsAvailable(preloadId = adUnit.key)
     }
+
+    override suspend fun loadSwipeableAd(adUnit: AdUnit): SwipeableInterstitialAd? = adLoader?.loadSwipeableInterstitialAd(adUnit = adUnit)
 
     private fun checkIfAdLoaderIsInitialized() {
         requireNotNull(this.adLoader) { "AdManager.init() not called!" }

@@ -1,8 +1,12 @@
+@file:OptIn(ExperimentalApi::class)
+
 package com.droiddevtips.nextgenexamples.ads.domain
 
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
+import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
+import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import kotlinx.coroutines.flow.StateFlow
 
 /**
@@ -30,5 +34,6 @@ interface AdManager {
 
     fun preLoadInterstitialAd(adUnit: AdUnit)
     fun destroyInterstitialAd(adUnit: AdUnit)
+    suspend fun loadSwipeableAd(adUnit: AdUnit): SwipeableInterstitialAd?
 
 }
