@@ -159,7 +159,6 @@ fun SwipeableScreen(screen: Screen, modifier: Modifier = Modifier) {
                                         }
                                     }
                                 }
-
                             }
                         }
                     }
