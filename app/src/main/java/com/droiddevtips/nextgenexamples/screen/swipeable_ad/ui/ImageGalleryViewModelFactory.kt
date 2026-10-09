@@ -1,6 +1,6 @@
 @file:Suppress("UNCHECKED_CAST")
 
-package com.droiddevtips.nextgenexamples.screen.swipeable_ad
+package com.droiddevtips.nextgenexamples.screen.swipeable_ad.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,8 +10,8 @@ import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 /**
  * Factory for creating instances of [ImageGalleryViewModel].
  *
- * Since [ImageGalleryViewModel] requires dependencies (such as [AdManager])
- * that cannot be resolved by the default no-argument [ViewModelProvider.Factory],
+ * Since [ImageGalleryViewModel] requires dependencies (such as [com.droiddevtips.nextgenexamples.ads.domain.AdManager])
+ * that cannot be resolved by the default no-argument [androidx.lifecycle.ViewModelProvider.Factory],
  * this factory manually constructs the ViewModel and injects the required
  * dependencies.
  *
