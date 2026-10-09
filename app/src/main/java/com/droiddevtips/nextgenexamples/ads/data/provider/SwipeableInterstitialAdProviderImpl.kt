@@ -18,7 +18,7 @@ import kotlin.coroutines.resume
 class SwipeableInterstitialAdProviderImpl: SwipeableInterstitialAdProvider, Logger by LoggerImpl(SwipeableInterstitialAdProviderImpl::class.java.simpleName)  {
 
     companion object {
-        const val SCREEN_HOLD_DURATION_IN_SECONDS = 5
+        const val SCREEN_HOLD_DURATION_IN_SECONDS = 3
     }
 
     override suspend fun loadSwipeableAd(adUnit: AdUnit): SwipeableInterstitialAd? {

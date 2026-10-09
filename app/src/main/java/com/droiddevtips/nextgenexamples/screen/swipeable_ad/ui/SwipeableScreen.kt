@@ -2,6 +2,7 @@
 
 package com.droiddevtips.nextgenexamples.screen.swipeable_ad.ui
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -26,6 +27,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -100,27 +105,61 @@ fun SwipeableScreen(screen: Screen, modifier: Modifier = Modifier) {
 
                         when (val item = viewState.value.items[page]) {
                             is GalleryItem.Ad -> {
+                                var adView by remember { mutableStateOf<View?>(null) }
 
                                 AndroidView(
-                                    modifier = Modifier.fillMaxSize().onVisibilityChanged { visible ->
-                                        if (visible) {
-                                            viewModel.performAction(action = ImageGalleryViewModelAction.HoldSwipeableAdOnScreen(swipeableInterstitialAd = item.swipeableInterstitialAd))
-                                        }
-                                    },
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .onVisibilityChanged { visible ->
+                                            // In case you are dealing with video ads toggle the visibility so the pager keeps this page attached off-screen; hide it so the ad pauses its video
+                                            adView?.visibility =
+                                                if (visible) View.VISIBLE else View.INVISIBLE
+                                            if (visible) {
+                                                viewModel.performAction(
+                                                    action = ImageGalleryViewModelAction.HoldSwipeableAdOnScreen(
+                                                        swipeableInterstitialAd = item.swipeableInterstitialAd
+                                                    )
+                                                )
+                                            }
+                                        },
                                     factory = {
                                         item.swipeableInterstitialAd.getView(activity)
                                             .also { view ->
                                                 (view.parent as? ViewGroup)?.removeView(view)
+                                                adView = view
                                             }
                                     })
                             }
 
                             is GalleryItem.Image -> {
-                                Image(
-                                    painter = painterResource(item.image),
-                                    modifier = Modifier.fillMaxWidth(),
-                                    contentDescription = null
-                                )
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(color = Color.Red)
+                                ) {
+                                    Image(
+                                        painter = painterResource(item.image),
+                                        modifier = Modifier.fillMaxWidth(),
+                                        contentDescription = null
+                                    )
+
+                                    if (item.credit.isNotBlank()) {
+                                        Row(
+                                            modifier = Modifier.padding(all = 4.dp)
+                                                .background(color = Color.Black.copy(alpha = 0.28f))
+                                                .align(alignment = Alignment.BottomEnd)
+                                        ) {
+                                            Text(
+                                                item.credit,
+                                                color = Color.White,
+                                                modifier = Modifier.padding(
+                                                    horizontal = 4.dp
+                                                )
+                                            )
+                                        }
+                                    }
+                                }
+
                             }
                         }
                     }
