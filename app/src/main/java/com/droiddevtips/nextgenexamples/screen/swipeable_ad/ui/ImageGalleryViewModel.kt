@@ -2,6 +2,7 @@
 
 package com.droiddevtips.nextgenexamples.screen.swipeable_ad.ui
 
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.droiddevtips.nextgenexamples.ads.data.provider.SwipeableInterstitialAdProviderImpl
@@ -11,9 +12,9 @@ import com.droiddevtips.nextgenexamples.core.Drawable
 import com.droiddevtips.nextgenexamples.logging.data.LoggerImpl
 import com.droiddevtips.nextgenexamples.logging.domain.LogLevel
 import com.droiddevtips.nextgenexamples.logging.domain.Logger
+import com.droiddevtips.nextgenexamples.screen.swipeable_ad.data.GalleryItem
 import com.droiddevtips.nextgenexamples.screen.swipeable_ad.data.ImageGalleryViewModelAction
 import com.droiddevtips.nextgenexamples.screen.swipeable_ad.data.SwipeableAdViewState
-import com.droiddevtips.nextgenexamples.screen.swipeable_ad.data.GalleryItem
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import kotlinx.coroutines.Deferred
@@ -22,13 +23,18 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 /**
@@ -53,6 +59,13 @@ class ImageGalleryViewModel(private val adManager: AdManager) : ViewModel(), Log
     private val _swipeableViewState = MutableStateFlow(SwipeableAdViewState())
     val swipeableViewState: StateFlow<SwipeableAdViewState> = _swipeableViewState.asStateFlow()
 
+    private val _swipeable_ad_screen_hold_remaining =
+        MutableStateFlow(SwipeableInterstitialAdProviderImpl.SCREEN_HOLD_DURATION_IN_SECONDS)
+    val swipeableAdScreenHoldRemaining: StateFlow<Int> =
+        _swipeable_ad_screen_hold_remaining.asStateFlow()
+
+    private var countdownTimerJob: Job? = null
+
     private val swipeAds = ConcurrentHashMap<Int, SwipeableInterstitialAd>()
 
     val adIndexes = listOf(
@@ -62,27 +75,63 @@ class ImageGalleryViewModel(private val adManager: AdManager) : ViewModel(), Log
 
     private var swipeAdJob: Job? = null
 
-    init {
-        viewModelScope.launch {
-            startLoadingSwipeableAds()
-        }
-    }
-
     fun performAction(action: ImageGalleryViewModelAction) {
-        when(action) {
+        when (action) {
             is ImageGalleryViewModelAction.HoldSwipeableAdOnScreen -> viewModelScope.launch {
                 holdAdOnScreen(ad = action.swipeableInterstitialAd)
             }
+
+            is ImageGalleryViewModelAction.OnPageIndexChanged -> {
+                if (action.index == 0) {
+                    _swipeableViewState.update { it.copy(interceptOnBackPressed = false) }
+                    log(level = LogLevel.Info, message = "On back pressed enabled")
+                } else if (!_swipeableViewState.value.interceptOnBackPressed) {
+                    log(level = LogLevel.Info, message = "On back pressed disabled")
+                    _swipeableViewState.update { it.copy(interceptOnBackPressed = true) }
+                }
+            }
+
+            ImageGalleryViewModelAction.OnCleared -> onCleared()
+
+            is ImageGalleryViewModelAction.LifeCycle -> viewModelScope.launch {
+                when(action.event) {
+
+                    Lifecycle.Event.ON_CREATE -> {
+                        startLoadingSwipeableAds()
+                    }
+
+                    else -> Unit
+                }
+            }
+
+            is ImageGalleryViewModelAction.Log -> log(level = action.level, message = action.message)
         }
     }
 
-    private suspend fun holdAdOnScreen(ad: SwipeableInterstitialAd) {
-        val duration = if (ad.getScreenHoldDuration() == 0) SwipeableInterstitialAdProviderImpl.SCREEN_HOLD_DURATION_IN_SECONDS else ad.getScreenHoldDuration()
-        log(level = LogLevel.Info, message = "Hold on screen started for $duration duration!")
+    private suspend fun holdAdOnScreen(ad: SwipeableInterstitialAd) = withContext(Dispatchers.Main) {
+
+        if (countdownTimerJob?.isActive == true)
+            return@withContext
+
         _swipeableViewState.update { it.copy(userScrollEnabled = false) }
-        delay(duration.seconds)
-        _swipeableViewState.update { it.copy(userScrollEnabled = true) }
-        log(level = LogLevel.Info, message = "Hold on screen stopped!")
+
+        val duration =
+            if (ad.getScreenHoldDuration() == 0) SwipeableInterstitialAdProviderImpl.SCREEN_HOLD_DURATION_IN_SECONDS else ad.getScreenHoldDuration()
+
+        log(level = LogLevel.Info, message = "Hold on screen started for $duration duration!")
+
+        countdownTimerJob = launch {
+            countdown(duration).onCompletion {
+                _swipeableViewState.update {
+                    it.copy(
+                        userScrollEnabled = true
+                    )
+                }
+                log(level = LogLevel.Info, message = "Hold on screen stopped!")
+            }.collect {
+                _swipeable_ad_screen_hold_remaining.value = it
+            }
+        }
     }
 
     private suspend fun startLoadingSwipeableAds() =
@@ -136,7 +185,16 @@ class ImageGalleryViewModel(private val adManager: AdManager) : ViewModel(), Log
             }
         }
 
+    private fun countdown(totalSeconds: Int, tickMillis: Duration = 1.seconds): Flow<Int> = flow {
+        for (remaining in totalSeconds downTo 0) {
+            emit(remaining)
+            if (remaining > 0)
+                delay(tickMillis)
+        }
+    }.flowOn(Dispatchers.Default)
+
     override fun onCleared() {
+        log(level = LogLevel.Info, message = "On cleared called and swipe ads removed!")
         val keys = swipeAds.keys.map { it }.toList()
         keys.forEach {
             swipeAds.remove(it)?.destroy()

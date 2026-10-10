@@ -12,6 +12,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.common.LoadAdError
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAdRequest
+import com.google.android.libraries.ads.mobile.sdk.nativead.NativeAd.SwipeGestureDirection
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
@@ -27,6 +28,7 @@ class SwipeableInterstitialAdProviderImpl: SwipeableInterstitialAdProvider, Logg
 
             val requestBuilder = SwipeableInterstitialAdRequest.Builder(adUnit.adUnit)
                 .setMaxScreenHoldDurationSeconds(SCREEN_HOLD_DURATION_IN_SECONDS)
+                .enableCustomClickSwipeGesture(SwipeGestureDirection.RIGHT)
             SwipeableInterstitialAd.load(
                 requestBuilder.build(),
                 object : AdLoadCallback<SwipeableInterstitialAd> {
