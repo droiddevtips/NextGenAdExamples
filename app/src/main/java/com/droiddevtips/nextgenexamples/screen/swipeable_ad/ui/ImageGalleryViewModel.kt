@@ -73,7 +73,7 @@ class ImageGalleryViewModel(private val adManager: AdManager) : ViewModel(), Log
         3
     )
 
-    private var swipeAdJob: Job? = null
+    private var loadSwipeAdJob: Job? = null
 
     fun performAction(action: ImageGalleryViewModelAction) {
         when (action) {
@@ -137,7 +137,7 @@ class ImageGalleryViewModel(private val adManager: AdManager) : ViewModel(), Log
     private suspend fun startLoadingSwipeableAds() =
         withContext(Dispatchers.IO.limitedParallelism(1)) {
 
-            swipeAdJob = launch {
+            loadSwipeAdJob = launch {
 
                 val tasks = ArrayList<Deferred<Pair<Int, SwipeableInterstitialAd?>>>()
 
