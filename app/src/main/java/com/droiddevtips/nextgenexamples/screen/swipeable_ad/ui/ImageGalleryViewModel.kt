@@ -170,7 +170,7 @@ class ImageGalleryViewModel(private val adManager: AdManager) : ViewModel(), Log
                         )
                     )
 
-                    adIndexes.firstOrNull { it == index }?.let { adKey ->
+                    adIndexes.firstOrNull { it == index }?.let {
                         swipeAds[index]?.let { swipeableInterstitialAd ->
                             displayItems.add(GalleryItem.Ad(swipeableInterstitialAd = swipeableInterstitialAd))
                         }
