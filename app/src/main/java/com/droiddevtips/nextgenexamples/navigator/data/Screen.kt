@@ -18,6 +18,7 @@ sealed class Screen(val title: String, val description: String, val icon: Int, v
     data object IconAd: Screen(title = "Icon Ads", description = "Specialized ad format introduced", icon = Drawable.icon_ads, route = "icon_ad")
     data object InterstitialAds: Screen(title = "Interstitial ads", description = "Ads cover the full screen of their host app.", icon = Drawable.interstitial, route = "interstitial_ad")
     data object SwipeableAds: Screen(title = "Swipeable ads", description = "Ads that can be shown while swiping between items.", icon = Drawable.swipeable_ad, route = "swipeable_ad")
+    data object PictureInPictureAds: Screen(title = "Pip ads", description = "Ads that will float on top of your view or the entire application.", icon = Drawable.pip_ads, route = "pip_ad")
 //    data object NativeAdExample: Screen(title = "Native ads", description = "Ads match the platform's native UI components.", icon = Drawable.native_ads, route = "native_ad")
     data object NoItemSelected: Screen(title = "", description = "", icon = Drawable.placeholder_icon, route = "no_item")
     data object EmptyScreen: Screen(title = "", description = "", icon = Drawable.placeholder_icon, route = "empty_item")
