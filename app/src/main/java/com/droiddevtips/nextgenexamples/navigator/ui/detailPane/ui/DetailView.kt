@@ -9,6 +9,7 @@ import com.droiddevtips.nextgenexamples.screen.comingPlaceholder.ComingSoonPlace
 import com.droiddevtips.nextgenexamples.screen.emptyScreen.EmptyScreen
 import com.droiddevtips.nextgenexamples.screen.iconAds.IconAdsExample
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.InterstitialAdsExample
+import com.droiddevtips.nextgenexamples.screen.pipAds.PipAdExample
 import com.droiddevtips.nextgenexamples.screen.swipeable_ad.ui.SwipeableScreen
 
 /**
@@ -27,8 +28,8 @@ fun DetailView(screen: Screen, modifier: Modifier = Modifier) {
         Screen.InterstitialAds -> InterstitialAdsExample(screen = screen, modifier = modifier)
         Screen.SwipeableAds -> SwipeableScreen(screen = screen, modifier = modifier)
         Screen.NoItemSelected -> EmptyScreen(modifier = modifier)
+        Screen.PictureInPictureAds -> PipAdExample(screen = screen, modifier = modifier)
 //        Screen.NativeAdExample -> NativeAdExample(modifier = modifier)
 //        Screen.RewardedInterstitialAdExample -> RewardedInterstitialAdsExample(modifier = modifier)
-        Screen.PictureInPictureAds -> ComingSoonPlaceholder(modifier = Modifier.fillMaxSize())
     }
 }
