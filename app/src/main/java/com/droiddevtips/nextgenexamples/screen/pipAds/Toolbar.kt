@@ -57,6 +57,5 @@ fun Toolbar(
 
             Box(modifier = Modifier.fillMaxWidth().height(toolbarHeight).background(color = Color.Black.copy(alpha = 0.38f)))
         }
-
     }
 }

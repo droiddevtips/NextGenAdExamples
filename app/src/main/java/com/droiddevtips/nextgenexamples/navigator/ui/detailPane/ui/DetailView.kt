@@ -1,11 +1,9 @@
 package com.droiddevtips.nextgenexamples.navigator.ui.detailPane.ui
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import com.droiddevtips.nextgenexamples.screen.bannerAdExample.ui.BannerAdExample
-import com.droiddevtips.nextgenexamples.screen.comingPlaceholder.ComingSoonPlaceholder
 import com.droiddevtips.nextgenexamples.screen.emptyScreen.EmptyScreen
 import com.droiddevtips.nextgenexamples.screen.iconAds.IconAdsExample
 import com.droiddevtips.nextgenexamples.screen.interstitialAds.InterstitialAdsExample
