@@ -10,5 +10,6 @@ import com.droiddevtips.nextgenexamples.R
  */
 typealias AppFont = R.font
 typealias Drawable = R.drawable
+typealias MipMap = R.mipmap
 typealias AppString = R.string
 typealias AppColor = R.color

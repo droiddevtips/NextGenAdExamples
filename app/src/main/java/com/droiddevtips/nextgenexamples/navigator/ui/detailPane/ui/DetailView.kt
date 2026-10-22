@@ -28,7 +28,7 @@ fun DetailView(screen: Screen, modifier: Modifier = Modifier) {
         Screen.InterstitialAds -> InterstitialAdsExample(screen = screen, modifier = modifier)
         Screen.SwipeableAds -> SwipeableScreen(screen = screen, modifier = modifier)
         Screen.NoItemSelected -> EmptyScreen(modifier = modifier)
-        Screen.PictureInPictureAds -> PipAdExample(screen = screen, modifier = modifier)
+        Screen.PictureInPictureAds -> PipAdExample(modifier = modifier)
 //        Screen.NativeAdExample -> NativeAdExample(modifier = modifier)
 //        Screen.RewardedInterstitialAdExample -> RewardedInterstitialAdsExample(modifier = modifier)
     }

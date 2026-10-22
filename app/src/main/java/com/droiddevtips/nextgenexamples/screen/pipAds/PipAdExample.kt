@@ -1,104 +1,23 @@
 package com.droiddevtips.nextgenexamples.screen.pipAds
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.droiddevtips.appwindowsizeandorientationdetector.Device
-import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
-import com.droiddevtips.nextgenexamples.core.AppColor
-import com.droiddevtips.nextgenexamples.core.AppString
-import com.droiddevtips.nextgenexamples.core.Drawable
-import com.droiddevtips.nextgenexamples.navigator.data.Screen
 
 @Composable
-fun PipAdExample(screen: Screen, modifier: Modifier = Modifier) {
+fun PipAdExample(modifier: Modifier = Modifier) {
 
-    val windowSize = deviceDetectorCurrentWindowSize()
-    val description = stringResource(id = AppString.icon_ad_text)
-    val firstChar = description.take(1)
-    val remainingText = description.drop(1)
-    val scroll = rememberScrollState()
+    val headerHeight = 275.dp
+    val toolbarHeight = 56.dp
+    val scrollState: ScrollState = rememberScrollState(0)
 
-    Scaffold(modifier = modifier, topBar = {
-        if (windowSize.device is Device.Mobile) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(color = Color.White),
-                horizontalArrangement = Arrangement.spacedBy(
-                    space = 8.dp,
-                    alignment = Alignment.CenterHorizontally
-                ),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Image(
-                    painter = painterResource(id = screen.icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(20.dp)
-                )
-
-                Text(text = screen.title)
-
-            }
-        }
-    }) { paddingValues ->
-
-        Column(
-            modifier = Modifier
-                .verticalScroll(scroll)
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(horizontal = 16.dp, vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(32.dp)
-        ) {
-
-            Image(
-                painter = painterResource(id = Drawable.google_ad_icon),
-                contentDescription = null,
-                modifier = Modifier.size(170.dp)
-            )
-
-            val annotatedString = buildAnnotatedString {
-
-                withStyle(
-                    style = SpanStyle(
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colorResource(id = AppColor.google_ad_blue)
-                    )
-                ) {
-                    append(firstChar)
-                }
-
-                append(remainingText)
-            }
-
-            Text(text = annotatedString, modifier = Modifier.padding(all = 16.dp))
-        }
+    Box(modifier = modifier) {
+        Header(headerHeight = headerHeight, scroll = scrollState)
+        Body(headerHeight = headerHeight, scroll = scrollState)
+        Toolbar(toolbarHeight = toolbarHeight, headerHeight = headerHeight, scroll = scrollState)
+        Title(scroll = scrollState, headerHeight = headerHeight, toolbarHeight = toolbarHeight)
     }
 }
