@@ -10,6 +10,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdPreloader
+import com.google.android.libraries.ads.mobile.sdk.pip.PictureInPictureAd
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -86,6 +87,8 @@ object AppAdManager: AdManager {
     }
 
     override suspend fun loadSwipeableAd(adUnit: AdUnit): SwipeableInterstitialAd? = adLoader?.loadSwipeableInterstitialAd(adUnit = adUnit)
+
+    override suspend fun loadPipAd(adUnit: AdUnit): PictureInPictureAd? = adLoader?.loadPictureInPictureAd(adUnit = adUnit)
 
     private fun checkIfAdLoaderIsInitialized() {
         requireNotNull(this.adLoader) { "AdManager.init() not called!" }

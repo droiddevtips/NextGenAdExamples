@@ -5,6 +5,7 @@ import com.droiddevtips.nextgenexamples.ads.data.loader.AdLoaderImpl
 import com.droiddevtips.nextgenexamples.ads.data.manager.AppAdManager
 import com.droiddevtips.nextgenexamples.ads.data.provider.BannerAdProviderImpl
 import com.droiddevtips.nextgenexamples.ads.data.provider.InterstitialAdProviderImpl
+import com.droiddevtips.nextgenexamples.ads.data.provider.PictureInPictureAdProviderImpl
 import com.droiddevtips.nextgenexamples.ads.data.provider.SwipeableInterstitialAdProviderImpl
 import com.droiddevtips.nextgenexamples.googleAdsConsentManager.GoogleAdsConsentManager
 import com.droiddevtips.nextgenexamples.logging.data.LoggerImpl
@@ -42,7 +43,8 @@ class App : Application(), Logger by LoggerImpl(className = App::class.java.simp
                 context = applicationContext,
                 bannerAdProvider = BannerAdProviderImpl(),
                 interstitialAdProvider = InterstitialAdProviderImpl(),
-                swipeableInterstitialAdProvider = SwipeableInterstitialAdProviderImpl()
+                swipeableInterstitialAdProvider = SwipeableInterstitialAdProviderImpl(),
+                pictureInPictureAdProvider = PictureInPictureAdProviderImpl()
             )
         })
     }

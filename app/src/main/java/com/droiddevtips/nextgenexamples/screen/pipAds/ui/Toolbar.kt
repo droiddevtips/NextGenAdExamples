@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.droiddevtips.nextgenexamples.screen.pipAds
+package com.droiddevtips.nextgenexamples.screen.pipAds.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -25,6 +25,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import com.droiddevtips.nextgenexamples.core.MipMap
 
+/**
+ *
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun Toolbar(
     scroll: ScrollState,

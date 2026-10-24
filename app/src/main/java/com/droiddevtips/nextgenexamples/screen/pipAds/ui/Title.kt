@@ -1,4 +1,4 @@
-package com.droiddevtips.nextgenexamples.screen.pipAds
+package com.droiddevtips.nextgenexamples.screen.pipAds.ui
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.material3.Text

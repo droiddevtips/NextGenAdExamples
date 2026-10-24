@@ -7,6 +7,7 @@ import android.content.Context
 import com.droiddevtips.nextgenexamples.ads.domain.AdLoader
 import com.droiddevtips.nextgenexamples.ads.domain.BannerAdProvider
 import com.droiddevtips.nextgenexamples.ads.domain.InterstitialAdProvider
+import com.droiddevtips.nextgenexamples.ads.domain.PictureInPictureAdProvider
 import com.droiddevtips.nextgenexamples.ads.domain.SwipeableInterstitialAdProvider
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
@@ -14,6 +15,7 @@ import com.google.android.libraries.ads.mobile.sdk.banner.BannerAdPreloader
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdPreloader
+import com.google.android.libraries.ads.mobile.sdk.pip.PictureInPictureAd
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import java.util.concurrent.ConcurrentHashMap
 
@@ -34,15 +36,17 @@ object AdLoaderImpl: AdLoader {
     private var bannerAdProvider: BannerAdProvider? = null
     private var interstitialAdProvider: InterstitialAdProvider? = null
     private var swipeableInterstitialAdProvider: SwipeableInterstitialAdProvider? = null
+    private var pictureInPictureAdProvider: PictureInPictureAdProvider? = null
     private val cachedBannerAd = ConcurrentHashMap<String, BannerAd>()
     private var interstitialServed: InterstitialAd? = null
     private var context: Context? = null
 
-    override fun init(context: Context, bannerAdProvider: BannerAdProvider, interstitialAdProvider: InterstitialAdProvider, swipeableInterstitialAdProvider: SwipeableInterstitialAdProvider) {
+    override fun init(context: Context, bannerAdProvider: BannerAdProvider, interstitialAdProvider: InterstitialAdProvider, swipeableInterstitialAdProvider: SwipeableInterstitialAdProvider, pictureInPictureAdProvider: PictureInPictureAdProvider) {
         this.context = context
         this.bannerAdProvider = bannerAdProvider
         this.interstitialAdProvider = interstitialAdProvider
         this.swipeableInterstitialAdProvider = swipeableInterstitialAdProvider
+        this.pictureInPictureAdProvider = pictureInPictureAdProvider
     }
 
     override fun preLoadBannerAd(
@@ -105,6 +109,8 @@ object AdLoaderImpl: AdLoader {
     override fun destroyInterstitialAd(adUnit: AdUnit): Boolean = InterstitialAdPreloader.destroy(preloadId = adUnit.key)
 
     override suspend fun loadSwipeableInterstitialAd(adUnit: AdUnit): SwipeableInterstitialAd? = swipeableInterstitialAdProvider?.loadSwipeableAd(adUnit = adUnit)
+
+    override suspend fun loadPictureInPictureAd(adUnit: AdUnit): PictureInPictureAd? = pictureInPictureAdProvider?.loadPictureInPictureAd(adUnit = adUnit)
 
     private fun destroyCacheAd(type: AdType) {
 

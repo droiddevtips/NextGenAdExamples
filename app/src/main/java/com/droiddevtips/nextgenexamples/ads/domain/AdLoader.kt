@@ -7,6 +7,7 @@ import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
+import com.google.android.libraries.ads.mobile.sdk.pip.PictureInPictureAd
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 
 /**
@@ -26,7 +27,7 @@ import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.Swipeab
  */
 interface AdLoader {
 
-    fun init(context: Context, bannerAdProvider: BannerAdProvider, interstitialAdProvider: InterstitialAdProvider, swipeableInterstitialAdProvider: SwipeableInterstitialAdProvider)
+    fun init(context: Context, bannerAdProvider: BannerAdProvider, interstitialAdProvider: InterstitialAdProvider, swipeableInterstitialAdProvider: SwipeableInterstitialAdProvider, pictureInPictureAdProvider: PictureInPictureAdProvider)
     fun preLoadBannerAd(adUnit: AdUnit.BannerAd)
     fun getBannerAd(preLoaderID: String): BannerAd?
     fun removeCacheBannerAd(adUnit: AdUnit): Boolean
@@ -35,5 +36,6 @@ interface AdLoader {
     fun getInterstitialAd(preLoaderID: String): InterstitialAd?
     fun destroyInterstitialAd(adUnit: AdUnit): Boolean
     suspend fun loadSwipeableInterstitialAd(adUnit: AdUnit): SwipeableInterstitialAd?
+    suspend fun loadPictureInPictureAd(adUnit: AdUnit): PictureInPictureAd?
 
 }
