@@ -1,4 +1,4 @@
-package com.droiddevtips.nextgenexamples.screen.pipAds
+package com.droiddevtips.nextgenexamples.screen.pipAds.ui
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -20,9 +20,19 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.droiddevtips.appwindowsizeandorientationdetector.DeviceOrientation
+import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.core.AppColor
 import com.droiddevtips.nextgenexamples.core.AppString
 
+/**
+ * The scrollable body content of the picture-in-picture ad example, displaying the Machu Picchu
+ * introduction followed by the header and description sections. A spacer with the [headerHeight]
+ * is placed at the top so the content starts below the collapsing header.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun Body(
     headerHeight: Dp,
@@ -30,11 +40,18 @@ fun Body(
     modifier: Modifier = Modifier
 ) {
 
+    val windowSize = deviceDetectorCurrentWindowSize()
     val textColor = if (isSystemInDarkTheme()) Color.White else Color.Black
 
     Column(
         modifier = modifier
-            .padding(horizontal = 8.dp)
+            .then(
+                if (windowSize.orientation is DeviceOrientation.Landscape) {
+                    Modifier
+                } else {
+                    Modifier.padding(horizontal = 8.dp)
+                }
+            )
             .verticalScroll(scroll)
     ) {
 

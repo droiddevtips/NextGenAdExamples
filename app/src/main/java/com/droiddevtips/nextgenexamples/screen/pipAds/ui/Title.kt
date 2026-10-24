@@ -19,6 +19,13 @@ import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.sp
 import com.droiddevtips.nextgenexamples.core.AppString
 
+/**
+ * The animated Machu Picchu title. While the 'scroll' state changes, the title scales down and
+ * moves from the bottom of the header into the toolbar.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun Title(
     scroll: ScrollState,

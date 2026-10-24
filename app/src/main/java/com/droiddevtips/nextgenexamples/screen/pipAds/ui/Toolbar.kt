@@ -26,7 +26,9 @@ import androidx.compose.ui.unit.Dp
 import com.droiddevtips.nextgenexamples.core.MipMap
 
 /**
- *
+ * The collapsed toolbar displaying a cropped Machu Picchu image with a dark overlay. It fades in
+ * once the 'scroll' state reaches the bottom of the collapsing header, and fades out again when
+ * scrolling back up.
  *
  * Created by Melchior Vrolijk
  * Droid Dev Tips (c) 2026. All rights reserved.

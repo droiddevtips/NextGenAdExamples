@@ -1,4 +1,4 @@
-package com.droiddevtips.nextgenexamples.screen.pipAds
+package com.droiddevtips.nextgenexamples.screen.pipAds.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
@@ -18,6 +18,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import com.droiddevtips.nextgenexamples.core.MipMap
 
+/**
+ * The collapsing parallax header displaying the Machu Picchu image with a dark gradient overlay
+ * at the bottom behind the title. While the [scroll] state changes, the header translates up at
+ * half the scroll speed and fades out.
+ *
+ * Created by Melchior Vrolijk
+ * Droid Dev Tips (c) 2026. All rights reserved.
+ */
 @Composable
 fun Header(
     headerHeight: Dp,
@@ -52,7 +60,7 @@ fun Header(
                             Color.Transparent,
                             Color(0xAA000000),
                             Color(0xAA000000)
-                        ), // listOf(Color.Transparent, Color(0xAA000000), Color(0xAA000000)),
+                        ),
                         startY = 3 * headerHeightPx / 4 // to wrap the title only
                     )
                 )
