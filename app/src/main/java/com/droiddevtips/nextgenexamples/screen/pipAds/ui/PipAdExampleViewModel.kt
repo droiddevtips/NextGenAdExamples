@@ -99,8 +99,15 @@ class PipAdExampleViewModel(private val adManager: AdManager): ViewModel() {
             is PipViewModelAction.ShowAd -> _pipAd.value?.let {
                 val options =
                     Builder()
+                        // SCREEN: The PiP ad persists globally across the application.
+                        // APPLICATION: The PiP ad is scoped to a single screen (Activity).
                         .setPresentationScope(PictureInPictureAdPresentationScope.SCREEN)
-                        .setPosition(PictureInPictureAdPosition.BOTTOM_RIGHT)
+                        // BOTTOM_LEFT: The bottom-left corner of the screen.
+                        // BOTTOM_RIGHT: The bottom-right corner of the screen.
+                        // TOP_LEFT: The top-left corner of the screen.
+                        // TOP_RIGHT: The top-right corner of the screen.
+                        // DEFAULT: Uses the SDK's default ad position.
+                        .setPosition(PictureInPictureAdPosition.DEFAULT)
                         .build()
 
                 it.show(action.activity, options)
