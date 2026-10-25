@@ -2,12 +2,14 @@
 
 package com.droiddevtips.nextgenexamples.ads.domain
 
+import android.app.Activity
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
 import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.pip.PictureInPictureAd
+import com.google.android.libraries.ads.mobile.sdk.pip.PictureInPictureAdOptions
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import kotlinx.coroutines.flow.StateFlow
 
@@ -27,15 +29,16 @@ interface AdManager {
 
     fun init(adLoader: AdLoader)
 
-    fun getBannerAd(preLoaderID:String): BannerAd?
+    fun getBannerAd(preLoaderID: String): BannerAd?
 
     fun preLoadBannerAd(adUnit: AdUnit)
     fun clearAllCacheBannerAds(adUnits: List<AdUnit>)
 
-    fun getInterstitialAd(preLoaderID:String): InterstitialAd?
+    fun getInterstitialAd(preLoaderID: String): InterstitialAd?
 
     fun preLoadInterstitialAd(adUnit: AdUnit)
     fun destroyInterstitialAd(adUnit: AdUnit)
+    fun showPiPAd(activity: Activity, pipAd: PictureInPictureAd, options: PictureInPictureAdOptions)
     suspend fun loadSwipeableAd(adUnit: AdUnit): SwipeableInterstitialAd?
     suspend fun loadPipAd(adUnit: AdUnit): PictureInPictureAd?
 

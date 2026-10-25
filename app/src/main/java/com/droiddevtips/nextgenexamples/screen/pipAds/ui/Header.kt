@@ -16,6 +16,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
+import com.droiddevtips.appwindowsizeandorientationdetector.Device
+import com.droiddevtips.appwindowsizeandorientationdetector.deviceDetectorCurrentWindowSize
 import com.droiddevtips.nextgenexamples.core.MipMap
 
 /**
@@ -34,6 +36,7 @@ fun Header(
 ) {
 
     val headerHeightPx = with(LocalDensity.current) { headerHeight.toPx() }
+    val windowSize = deviceDetectorCurrentWindowSize()
 
     Box(
         modifier = modifier
@@ -48,7 +51,8 @@ fun Header(
         Image(
             painter = painterResource(id = MipMap.machu_picchu),
             contentDescription = null,
-            contentScale = ContentScale.FillBounds
+            modifier = Modifier.fillMaxWidth(),
+            contentScale = if (windowSize.device is Device.Tablet) ContentScale.FillWidth else ContentScale.FillBounds
         )
 
         Box(

@@ -242,7 +242,6 @@ private fun ImageView(item: GalleryItem.Image, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .background(color = Color.Red)
     ) {
         Image(
             painter = painterResource(item.image),

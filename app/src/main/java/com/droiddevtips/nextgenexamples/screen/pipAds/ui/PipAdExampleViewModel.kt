@@ -110,7 +110,7 @@ class PipAdExampleViewModel(private val adManager: AdManager): ViewModel() {
                         .setPosition(PictureInPictureAdPosition.DEFAULT)
                         .build()
 
-                it.show(action.activity, options)
+                adManager.showPiPAd(activity = action.activity, pipAd = it, options = options)
             }
 
             PipViewModelAction.OnCleared -> destroyPipAds()

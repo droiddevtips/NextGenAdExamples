@@ -2,6 +2,7 @@
 
 package com.droiddevtips.nextgenexamples.ads.data.manager
 
+import android.app.Activity
 import com.droiddevtips.nextgenexamples.ads.domain.AdLoader
 import com.droiddevtips.nextgenexamples.ads.domain.AdManager
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
@@ -11,6 +12,7 @@ import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAdPreloader
 import com.google.android.libraries.ads.mobile.sdk.pip.PictureInPictureAd
+import com.google.android.libraries.ads.mobile.sdk.pip.PictureInPictureAdOptions
 import com.google.android.libraries.ads.mobile.sdk.swipeableinterstitial.SwipeableInterstitialAd
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -84,6 +86,14 @@ object AppAdManager: AdManager {
         checkIfAdLoaderIsInitialized()
         adLoader?.destroyInterstitialAd(adUnit = adUnit)
         _interstitialAdsAvailable.value = InterstitialAdPreloader.getNumAdsAvailable(preloadId = adUnit.key)
+    }
+
+    override fun showPiPAd(
+        activity: Activity,
+        pipAd: PictureInPictureAd,
+        options: PictureInPictureAdOptions
+    ) {
+        pipAd.show(activity, options)
     }
 
     override suspend fun loadSwipeableAd(adUnit: AdUnit): SwipeableInterstitialAd? = adLoader?.loadSwipeableInterstitialAd(adUnit = adUnit)
