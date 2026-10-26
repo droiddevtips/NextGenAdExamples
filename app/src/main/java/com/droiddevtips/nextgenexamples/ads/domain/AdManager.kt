@@ -4,7 +4,6 @@ package com.droiddevtips.nextgenexamples.ads.domain
 
 import android.app.Activity
 import com.droiddevtips.nextgenexamples.ads.domain.model.AdUnit
-import com.droiddevtips.nextgenexamples.navigator.data.Screen
 import com.google.android.libraries.ads.mobile.sdk.banner.BannerAd
 import com.google.android.libraries.ads.mobile.sdk.common.ExperimentalApi
 import com.google.android.libraries.ads.mobile.sdk.interstitial.InterstitialAd
